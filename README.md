@@ -126,17 +126,17 @@ The communication is done using the postMessage API for sending messages to the 
 
 	```json
 	{ 
-		name: "load_object", 
-		data: "<objectId>"
+		"name": "load_object", 
+		"data": "<id>"
 	}
 	```
 
-2. Enable/disable camera: 
+2. Enable/disable camera (can be `0` or `1`):  
 
 	```json
 	{
 		"name": "enable_camera",
-		"data": 0 // can be 0 or 1
+		"data": 0
 	}
 	```
 
