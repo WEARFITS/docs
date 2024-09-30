@@ -1,0 +1,42 @@
+<html>
+
+<head>
+  <title>WEARFITS: Basic Virtual Fitting Room Demo</title>
+
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <script>
+      // Initialize the default garment
+      wearfits.current_garment_name = "Rozowa";
+      wearfits.loadDefaultOrCreateIt();
+      wearfits.showMaterialPresets = true;
+      wearfits.showSizeSelectionUI = true;
+      wearfits.showAvatarSelectionUI = true;
+      wearfits.showComfortMapButton = true;
+  </script>
+
+  <style>
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #wearfits_viewer {
+      width: 50%;
+      height: 60%;
+      margin: 10%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+        <div id="wearfits_viewer"></div>
+    </div>
+  </div>
+</body>
+
+</html>

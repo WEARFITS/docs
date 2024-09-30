@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>WEARFITS: Digital Mirror - IFRAME Communication Demo</title>
+  
+  <!-- Meta Tags for responsiveness and character encoding -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <style>
+    /* Full-screen layout */
+    body, html {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Container styles */
+    #wrapper {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    }
+
+    /* Iframe container styles */
+    #iframe_container {
+      width: calc(100% - 300px);
+      height: 100%;
+      position: relative;
+    }
+
+    /* Controls panel styles */
+    #tryon_controls {
+      width: 300px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #f0f0f0;
+    }
+
+    /* Interactive elements styling */
+    select, button, #status {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Status display styling */
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+
+  <script>
+    /**
+     * Sends a message to the iframe to load a specific shoe
+     * @param {string} value - The shoe ID or URL to load
+     */
+    function load_shoe(value) {
+      const tryon_iframe_window = document.getElementById('tryon_iframe').contentWindow;
+
+      const message = {
+        name: "load_object",
+        data: value
+      };
+
+      tryon_iframe_window.postMessage(JSON.stringify(message), "*");
+    }
+
+    /**
+     * Sends a message to the iframe to enable or disable the camera
+     * @param {boolean} value - True to enable, false to disable
+     */
+    function enable_camera(value) {
+      const tryon_iframe_window = document.getElementById('tryon_iframe').contentWindow;
+
+      const message = {
+        name: "enable_camera",
+        data: value
+      };
+
+      tryon_iframe_window.postMessage(JSON.stringify(message), "*");
+    }
+
+    /**
+     * Initializes event listeners after the DOM has loaded
+     */
+    document.addEventListener('DOMContentLoaded', function () {
+      const tryon_iframe_window = document.getElementById('tryon_iframe').contentWindow;
+      
+      // Listen for messages from the iframe
+      window.addEventListener('message', (event) => {
+          // Ensure the message is from the expected iframe
+          if (event.source !== tryon_iframe_window) {
+              return;
+          }
+
+          const event_data = JSON.parse(event.data);
+          console.log("Message from iframe:", event_data);
+
+          /*
+            Possible event_data.name values and their data:
+            - loadingProgressHandler: { name: "loadingProgressHandler", data: percent (int) }
+            - loadingFinishedHandler: { name: "loadingFinishedHandler", data: error_code (int) or null }
+            - objectLoadingProgressHandler: { name: "objectLoadingProgressHandler", data: percent (int) }
+            - objectLoadingFinishedHandler: { name: "objectLoadingFinishedHandler", data: { id: <string>, error: <err_code> } }
+            - shoesVisibilityChangedHandler: { name: "shoesVisibilityChangedHandler", data: visible (bool) }
+          */
+
+          // Update the status based on loading progress
+          if (event_data.name === "loadingProgressHandler") {
+            document.getElementById('status').textContent = `Loading... ${event_data.data}%`;
+          }
+
+          // Handle loading completion
+          if (event_data.name === "loadingFinishedHandler") {
+            const err_code = event_data.data;
+            if (err_code) {
+              document.getElementById('status').textContent = `Tryon initialization failed, error code: ${err_code}`;
+            } else {
+              document.getElementById('status').textContent = "Tryon initialization successful!";
+            }
+          }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Controls Panel -->
+    <div id="tryon_controls">
+      <label for="select_shoe_id">Select Shoe by ID:</label>
+      <select id="select_shoe_id" onchange="load_shoe(this.value)">
+        <option value="">-- Select Shoe --</option>
+        <option value="e84bc8b8afb5e6973556e376f0b942ab">e84bc8b8afb5e6973556e376f0b942ab (ID)</option>
+        <option value="a9a4778556849f748b092a04af9067a4">a9a4778556849f748b092a04af9067a4 (ID)</option>
+        <option value="https://storage.googleapis.com/wearfits-storage-dev2/static_models/5904248308902.glb">5904248308902 (Direct URL)</option>
+        <option value="ergeregerdfgdfg">Bad ID</option>
+      </select>
+
+      <button onclick="enable_camera(true)">Enable Camera</button>
+      <button onclick="enable_camera(false)">Disable Camera</button>
+
+      <div id="status">Status: Waiting for initialization...</div>
+    </div>
+
+    <!-- Iframe Container -->
+    <div id="iframe_container">
+      <iframe id="tryon_iframe" allow="camera" src="https://dev.wearfits.com/tryon/dev?mirror_mode=3" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WEARFITS: IFRAME Size Demo</title>
+
+  <style>
+    /* Styles for iframe and buttons */
+    #wearfits_iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .button-element {
+      position: absolute;
+      background-color: gray;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 20px;
+      padding: 10px;
+    }
+
+    .iframe-container {
+      position: relative;
+      width: 30%;
+      height: 30%;
+      display: inline-block;
+      border: 1px solid black;
+      margin: 10px;
+    }
+  </style>
+
+  <script>
+    /**
+     * Handles the click event on the iframe container to move the iframe
+     * @param {HTMLElement} element - The container element
+     */
+    function onIframeContainerClick(element) {
+      element.appendChild(document.getElementById('wearfits_iframe'));
+    }
+
+    /**
+     * Toggles the size of the iframe container
+     * @param {HTMLElement} element - The container element
+     */
+    function onButtonClick(element) {
+      element.style.width = (element.style.width !== "60%") ? "60%" : "30%";
+      element.style.height = (element.style.height !== "60%") ? "60%" : "30%";
+      event.stopPropagation();
+    }
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+      <!-- Iframe Container 1 -->
+      <div id="iframe_container_1" class="iframe-container" onclick="onIframeContainerClick(this)">
+        <div class="button-element" onclick="onButtonClick(this.parentElement)">Resize</div>
+        <iframe id="wearfits_iframe" src="https://dev.wearfits.com/viewer?object=f047b708df18a56738ac8428c2ec1b8b&noar=1&nocolorlist=1"></iframe>
+      </div>
+
+      <!-- Iframe Container 2 -->
+      <div id="iframe_container_2" class="iframe-container" onclick="onIframeContainerClick(this)">
+        <div class="button-element" onclick="onButtonClick(this.parentElement)">Resize</div>
+        <!-- WearFits iframe can be moved here -->
+      </div>
+    </div> 
+  </div> 
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WEARFITS: Transparent Background Demo</title>
+
+  <!-- Include WEARFITS JavaScript SDK -->
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <script>
+    // Configure WEARFITS for transparent background
+    wearfits.controlsType = null;
+    wearfits.origin = "https://dev.wearfits.com";
+    wearfits.showARButton = true;
+    wearfits.background = null;
+
+    // Load the specified object and adjust camera settings
+    wearfits.load("but_converse").then(() => {
+      wearfits.camera.position.set(-0.2643, -0.05998, -4.6481);
+      wearfits.camera.lookAt(0, 0, 0);
+    });
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content" style="background-color: green;">
+      <!-- WEARFITS Viewer with transparent background -->
+      <div id="wearfits_viewer" style="width:30%; height:30%; display:inline-block;"></div>
+    </div> 
+  </div> 
+</body>
+
+</html>

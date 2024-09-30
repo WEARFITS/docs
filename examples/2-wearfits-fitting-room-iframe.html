@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>WEARFITS: Fitting Room Demo IFRAME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://dev.wearfits.com/static/js/wearfits_for_shops.js"></script>
+  </head>
+  
+  <body>
+    <div class="view-in-virtual-fitting-room" style="font-size:30px;" data-name="Burda3B">
+      Click here to open iframe
+    </div>
+    <!-- IFRAME container -->
+    <iframe id="wearfits_iframe" src="" style="width:100%; height:100%; border:none;"></iframe>
+  </body>
+
+  <script>
+    // Event listener for messages from the parent window
+    window.addEventListener("message", (event) => {
+      console.log("Origin:", event.origin);
+      console.log("Source:", event.source);
+      console.log("Data:", event.data);
+    }, false);
+  </script>
+</html>

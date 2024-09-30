@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WEARFITS: Multiple Instances Demo</title>
+
+  <!-- Include WEARFITS JavaScript SDK with multiple instances support -->
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js?instancesCount=3"></script>
+
+  <script>
+    // Configure first WEARFITS instance
+    wearfits.origin = "https://dev.wearfits.com";
+    wearfits.canvas_container_id = "wearfits_viewer";
+    wearfits.controlsType = "MOUSE_POSITION";
+    wearfits.showARButton = false;
+    wearfits.showRayTracingButton = true;
+    wearfits.loadByHashAndId("751fb2279b592debc5af873f695afbc0", "Rozowa_38");
+
+    // Configure second WEARFITS instance
+    wearfits_1.origin = "https://dev.wearfits.com";
+    wearfits_1.canvas_container_id = "wearfits_viewer2";
+    wearfits_1.showARButton = true;
+    wearfits_1.showRayTracingButton = true;
+    wearfits_1.load("6dda6ac8a48048fc6b76297dba35efa7");
+
+    // Configure third WEARFITS instance
+    wearfits_2.origin = "https://dev.wearfits.com";
+    wearfits_2.canvas_container_id = "wearfits_viewer3";
+    wearfits_2.controlsType = "MOUSE_POSITION";
+    wearfits_2.showARButton = true;
+    wearfits_2.showRayTracingButton = true;
+    wearfits_2.load("but_converse");
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+      <!-- Multiple WEARFITS viewer containers -->
+      <div id="wearfits_viewer" style="width:40%; height:40%;"></div>
+      <div id="wearfits_viewer2" style="width:50%; height:30%;"></div>
+      <div id="wearfits_viewer3" style="width:30%; height:30%;"></div>
+    </div> 
+  </div> 
+</body>
+
+</html>

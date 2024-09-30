@@ -1,0 +1,130 @@
+<html>
+
+<head>
+  <title>WEARFITS: Custom Color Selection Implementation</title>
+
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script>
+    wearfits.origin = "https://dev.wearfits.com";
+    wearfits.showARButton = true;
+
+    // Load the specified object and handle it once loaded
+    wearfits.load("but_converse").then(onObjectLoad);
+
+    /**
+     * Processes the loaded object to generate customization options
+     * @param {Object} object - The loaded WEARFITS object
+     */
+    function onObjectLoad(object) {
+      let available_presets = {};
+
+      // Iterate through material sets to populate available presets
+      for (let material_set of object.material_sets) {
+        for (let material of material_set.materials) {
+          let material_name = material.prop.name;
+          
+          if (!available_presets[material_name]) available_presets[material_name] = [];
+
+          available_presets[material_name].push({
+            name: material_set.name,
+            material: material
+          });
+        }
+      }
+
+      // Create and append customization menus
+      createCustomizationMenus(object, available_presets);
+    }
+
+    /**
+     * Creates customization and preset menus based on available presets
+     * @param {Object} object - The loaded WEARFITS object
+     * @param {Object} available_presets - Available presets categorized by material
+     */
+    function createCustomizationMenus(object, available_presets) {
+      const menuCustomize = $('#menu_customize');
+      const menuPresets = $('#menu_presets');
+
+      // Create mesh list
+      let meshList = $('<ul>').appendTo(menuCustomize);
+      $('<li>').text(object.name).appendTo(meshList);
+      let materialList = $('<ul>').appendTo(meshList);
+
+      // Create preset list
+      let presetList = $('<ul id="wearfits_preset_list">').appendTo(menuPresets);
+
+      // Populate customization list
+      for (let mesh_material in available_presets) {
+        let part_type = mesh_material;
+
+        // Material label
+        $('<li>').text(part_type).appendTo(materialList);
+
+        // Preset options
+        available_presets[mesh_material].forEach(preset => {
+          $('<li>', {
+            class: "part-name",
+            "part_name": preset.name,
+            "part_type": part_type,
+            "mesh_name": object.name,
+            text: preset.name
+          }).appendTo(materialList.find('li').last().append('<ul>'));
+        });
+      }
+
+      // Populate preset list
+      object.material_sets.forEach(material_set => {
+        if (material_set.materials && material_set.materials.length) {
+          $('<li>', {
+            class: "preset",
+            "preset": material_set.name,
+            text: material_set.name
+          }).appendTo(presetList);
+        }
+      });
+    }
+
+    $(document).ready(() => {
+      // Event handler for part name click
+      $(document).on('click', '.part-name', function () {
+        let mesh_name = $(this).attr("mesh_name");
+        let part_type = $(this).attr("part_type");
+        let part_name = $(this).attr("part_name");
+        wearfits.loadMaterial(part_type, part_name, mesh_name);
+      });
+
+      // Event handler for preset click
+      $(document).on('click', '.preset', function () {
+        let preset = $(this).attr("preset");
+        wearfits.loadMaterialSet(preset).then(() => { });
+      });
+    });
+  </script>
+
+  <style>
+    /* Styles for interactive elements */
+    .part-name,
+    .preset {
+      cursor: pointer;
+      color: blue;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+      <div id="wearfits_viewer" style="height:70%"></div>
+      <!-- Customization and Preset Menus -->
+      <div>
+        <div id="menu_customize">Customize</div>
+        <div id="menu_presets">Presets</div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

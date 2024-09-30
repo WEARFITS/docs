@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>WEARFITS: Advanced Apparel Try-On and Size Fitting Demo</title>
+
+  <!-- Include WEARFITS JavaScript SDK -->
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <script>
+    // Configure WEARFITS settings for the demo
+    wearfits.showRayTracingButton = false;
+    wearfits.showARButton = false;
+    wearfits.showMaterialPresets = false;
+    wearfits.showSizeSelectionUI = false;
+    wearfits.showAvatarSelectionUI = false;
+    wearfits.showComfortMapButton = false;
+
+    /**
+     * Updates the avatar and garments based on user inputs
+     */
+    async function update_avatar_and_garment() {
+      const ids = [];
+
+      // Retrieve user measurements
+      const height = parseFloat(window.height.value);
+      const chest = parseFloat(window.chest.value);
+      const waist = parseFloat(window.waist.value);
+      const buttock = parseFloat(window.buttock.value);
+
+      // Retrieve selected garment names
+      const garment_name_1 = window.garment_list_1.value;
+      const garment_name_2 = window.garment_list_2.value;
+
+      // Update user measurements for fit advisor
+      wearfits.userParams.height = height;
+      wearfits.userParams.chest = chest;
+      wearfits.userParams.waist = waist;
+      wearfits.userParams.buttock = buttock;
+
+      const garments = [];
+
+      // Populate garments array based on selections
+      if (garment_name_1) {
+        garments.push({
+          name: garment_name_1,
+          avatar_id: null,
+          size_list_element: window.size_list_1,
+          color_list_element: window.color_list_1,
+          prefered_size_element: window.prefered_size_1,
+        });
+      }
+      if (garment_name_2) {
+        garments.push({
+          name: garment_name_2,
+          avatar_id: null,
+          size_list_element: window.size_list_2,
+          color_list_element: window.color_list_2,
+          prefered_size_element: window.prefered_size_2,
+        });
+      }
+
+      // Process each selected garment
+      for (let garment of garments) {
+        // Fetch garment data from server (available sizes, etc.)
+        await wearfits.getGarmentDataFromServer(garment.name);
+
+        // Update preferred size display
+        garment.prefered_size_element.innerHTML = wearfits.getPreferedSize(garment.name);
+
+        // Update size selection dropdown
+        update_size_list(garment.size_list_element, garment.name);
+
+        // Retrieve avatar ID based on measurements and garment
+        garment.avatar_id = await wearfits.getAvatarHashFromServer(height, chest, waist, buttock, null, garment.name);
+
+        const color = garment.color_list_element.value;
+
+        // Retrieve selected garment size
+        const garment_size = garment.size_list_element.value;
+
+        // Compose garment ID from name and size
+        const garment_id = `${garment.name}_${garment_size}`;
+
+        ids.push({
+          idsize: garment_id,
+          preset: color
+        });
+      }
+
+      const avatar_id = garments[0].avatar_id;
+
+      // Ensure all selected garments are compatible with the avatar
+      for (let garment of garments) {
+        if (garment.avatar_id !== avatar_id) {
+          wearfits.showToast("Garments are not compatible", true, 15000);
+          throw new Error("Garments are not compatible");
+        }
+      }
+
+      // Load avatars and garments into WEARFITS
+      await wearfits.loadByHashAndId(avatar_id, ids);
+
+      // Update color selection dropdowns post loading
+      for (let garment of garments) {
+        update_color_list(garment.color_list_element, garment.name);
+      }
+
+      console.log("Loaded garments:", ids.map(e => e.idsize).join(", "));
+    }
+
+    /**
+     * Updates the size selection dropdown based on the selected garment
+     * @param {HTMLElement} list_element - The size selection element
+     * @param {string} garment_name - The name of the selected garment
+     */
+    function update_size_list(list_element, garment_name) {
+      if (list_element.garment_name === garment_name) {
+        // Prevent redundant updates if garment hasn't changed
+        return;
+      }
+      list_element.garment_name = garment_name;
+
+      const sizes = wearfits.getGarmentSizes(garment_name);
+      list_element.innerHTML = "";
+      sizes.forEach(size => {
+        const opt = document.createElement('option');
+        opt.value = size;
+        opt.textContent = size;
+        if (size === wearfits.current_garment_size) {
+          opt.selected = true;
+        }
+        list_element.appendChild(opt);
+      });
+    }
+
+    /**
+     * Updates the color selection dropdown based on the selected garment
+     * @param {HTMLElement} list_element - The color selection element
+     * @param {string} garment_name - The name of the selected garment
+     */
+    function update_color_list(list_element, garment_name) {
+      list_element.innerHTML = "";
+      list_element.onchange = null;
+
+      // Find the garment object
+      const garment = wearfits.garments.find(g => g.name === garment_name);
+      if (garment) {
+        list_element.onchange = function () {
+          wearfits.loadMaterialSet(this.value, garment);
+        };
+        garment.material_sets.forEach(material_set => {
+          const opt = document.createElement('option');
+          opt.value = material_set.name;
+          opt.textContent = material_set.name;
+          if (material_set.name === garment.preset) {
+            opt.selected = true;
+          }
+          list_element.appendChild(opt);
+        });
+      }
+    }
+
+    /**
+     * Changes measurement units and updates input values accordingly
+     * @param {string} unit - The unit to switch to ("inch" or "cm")
+     */
+    function change_units(unit) {
+      wearfits.units = unit;
+
+      const ratio = unit === "inch" ? 1 / 2.54 : 2.54;
+      height.value = (parseFloat(height.value) * ratio).toFixed(2);
+      chest.value = (parseFloat(chest.value) * ratio).toFixed(2);
+      waist.value = (parseFloat(waist.value) * ratio).toFixed(2);
+      buttock.value = (parseFloat(buttock.value) * ratio).toFixed(2);
+      
+      shoulders.value = (parseFloat(shoulders.value) * ratio).toFixed(2);
+      thigh.value = (parseFloat(thigh.value) * ratio).toFixed(2);
+      calf.value = (parseFloat(calf.value) * ratio).toFixed(2);
+    }
+  </script>
+
+  <style>
+    /* Styles for layout boxes */
+    .box {
+      padding: 7px;
+      margin: 15px;
+      border-top: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content" style="display: flex; height: 100%;">
+      <!-- WEARFITS Viewer -->
+      <div id="wearfits_viewer" style="width: 50%; height: 100%; display: inline-block;"></div>
+
+      <div style="width: 50%; height: 100%; margin: 15px; display: inline-block;">
+        <!-- Measurement Inputs -->
+        <div class="box">
+          <div>
+            Units
+            <select onchange="change_units(this.value);">
+              <option value="cm">cm</option>
+              <option value="inch">inch</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="box">
+          <b>Avatar Measurements</b>
+          <div>Height: <input type="number" id="height" value="165" step="0.1"></div>
+          <div>Chest: <input type="number" id="chest" value="88" step="0.1"></div>
+          <div>Waist: <input type="number" id="waist" value="70" step="0.1"></div>
+          <div>Buttock: <input type="number" id="buttock" value="94" step="0.1"></div>
+          <div>Shoulders: <input type="number" id="shoulders" value="0" step="0.1" readonly></div>
+          <div>Thigh: <input type="number" id="thigh" value="0" step="0.1" readonly></div>
+          <div>Calf: <input type="number" id="calf" value="0" step="0.1" readonly></div>
+          <div><button onclick="update_avatar_and_garment()">Update Avatar and Garments</button></div>
+        </div>
+
+        <!-- Garment Selection 1 -->
+        <div class="box">
+          <div>
+            Garment Select 1:
+            <select id="garment_list_1" onchange="update_avatar_and_garment()">
+              <option value="" selected>None</option>
+              <!-- Add more garment options as needed -->
+              <option value="pant">Pant</option>
+              <option value="CLONIFY FLORAL SHORTS">CLONIFY Floral Shorts</option>
+              <option value="CLONIFY FLORAL TOP">CLONIFY Floral Top</option>
+              <option value="CLONIFY WOMAN JEANSY">CLONIFY Woman Jeansy</option>
+              <option value="CLONIFY WOMAN SWEATER">CLONIFY Woman Sweater</option>
+              <option value="CLONIFY STRIPED DENIM JEANS">CLONIFY Striped Denim Jeans</option>
+              <option value="CLONIFY WOMEN DENIM SHORTS">CLONIFY Women Denim Shorts</option>
+              <option value="ShirtH">ShirtH</option>
+              <option value="CLONIFY MAN PANTS">CLONIFY Man Pants</option>
+              <option value="CLONIFY MAN SWEATER">CLONIFY Man Sweater</option>
+              <option value="CLONIFY WHITE T-SHIRT">CLONIFY White T-Shirt</option>
+              <option value="CLONIFY MEN WHITE SHIRT">CLONIFY Men White Shirt</option>
+              <option value="CLONIFY MAN PANT">CLONIFY Man Pant</option>
+              <option value="CLONIFY MAN GANT GREY PANT">CLONIFY Man Gant Grey Pant</option>
+            </select>
+          </div>
+          <div>
+            Select Size 1:
+            <select id="size_list_1" onchange="update_avatar_and_garment()"></select>
+          </div>
+          <div>
+            Select Color 1:
+            <select id="color_list_1"></select>
+          </div>
+          <div>
+            Preferred Size 1: <span id="prefered_size_1"></span>
+          </div>
+        </div>
+
+        <!-- Garment Selection 2 -->
+        <div class="box">
+          <div>
+            Garment Select 2:
+            <select id="garment_list_2" onchange="update_avatar_and_garment()">
+              <option value="" selected>None</option>
+              <!-- Add more garment options as needed -->
+              <option value="pant">Pant</option>
+              <option value="CLONIFY FLORAL SHORTS">CLONIFY Floral Shorts</option>
+              <option value="CLONIFY FLORAL TOP">CLONIFY Floral Top</option>
+              <option value="CLONIFY WOMAN JEANSY">CLONIFY Woman Jeansy</option>
+              <option value="CLONIFY WOMAN SWEATER">CLONIFY Woman Sweater</option>
+              <option value="CLONIFY STRIPED DENIM JEANS">CLONIFY Striped Denim Jeans</option>
+              <option value="CLONIFY WOMEN DENIM SHORTS">CLONIFY Women Denim Shorts</option>
+              <option value="ShirtH">ShirtH</option>
+              <option value="CLONIFY MAN PANTS">CLONIFY Man Pants</option>
+              <option value="CLONIFY MAN SWEATER">CLONIFY Man Sweater</option>
+              <option value="CLONIFY WHITE T-SHIRT">CLONIFY White T-Shirt</option>
+              <option value="CLONIFY MEN WHITE SHIRT">CLONIFY Men White Shirt</option>
+              <option value="CLONIFY MAN PANT">CLONIFY Man Pant</option>
+              <option value="CLONIFY MAN GANT GREY PANT">CLONIFY Man Gant Grey Pant</option>
+            </select>
+          </div>
+          <div>
+            Select Size 2:
+            <select id="size_list_2" onchange="update_avatar_and_garment()"></select>
+          </div>
+          <div>
+            Select Color 2:
+            <select id="color_list_2"></select>
+          </div>
+          <div>
+            Preferred Size 2: <span id="prefered_size_2"></span>
+          </div>
+        </div>
+
+        <!-- Toggle Visibility Order -->
+        <div class="box">
+          <button onclick="wearfits.garmentVisibilityOrder = wearfits.garmentVisibilityOrder === 1 ? 2 : 1;">
+            Toggle Visibility Order
+          </button>
+        </div>
+
+        <!-- Strain Map Toggle -->
+        <div class="box">
+          <button onclick="wearfits.toggleStrainMap()">Toggle Strain View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

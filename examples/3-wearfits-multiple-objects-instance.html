@@ -1,0 +1,72 @@
+<html>
+
+<head>
+  <title>WEARFITS: Load Multiple Objects with Instances</title>
+
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <script>
+      // Initialize WEARFITS with multiple object instances
+      wearfits.origin = "https://dev.wearfits.com";
+      wearfits.canvas_container_id = "wearfits_viewer";
+      wearfits.showARButton = true;
+      wearfits.showRotationButton = true;
+      wearfits.showExpandButton = true;
+      
+      // Define instances with positions and rotations
+      const instances = [
+        {
+          position: [0, 0, 0],
+          rotation: [0, -1.57, 0]
+        },
+        {
+          position: [0.17, 0.05, 0.05],
+          rotation: [1.57, 0, 2.4]
+        }
+      ];
+
+      // Load multiple garments with instances
+      wearfits.load("CH_D_005-PD_001", {
+        index: 0,
+        preset: "default",
+        instances: instances
+      });
+
+      wearfits.load("CH_D_005_L", {
+        index: 1,
+        preset: "default",
+        instances: instances
+      });
+  </script>
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    #wearfits_viewer {
+      width: 50%;
+      height: 50%;
+      display: inline-block;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+        <div id="wearfits_viewer" style="width:50%;height:50%;display:inline-block"></div>
+    </div>
+  </div> 
+</body>
+
+</html>

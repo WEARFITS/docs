@@ -1,0 +1,59 @@
+<html>
+
+<head>
+  <title>WEARFITS: Click to Switch Container Demo</title>
+
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <style>
+    .container {
+      width: 30%;
+      height: 30%;
+      display: inline-block;
+      border: 1px solid black;
+      margin: 10px;
+    }
+  </style>
+
+  <script>
+      // Initialize WEARFITS
+      wearfits.origin = "https://dev.wearfits.com";
+      wearfits.canvas_container_id = "wearfits_viewer2";
+      wearfits.showARButton = true;
+      wearfits.showRayTracingButton = true;
+      wearfits.load("but_converse");
+      
+      /**
+       * Updates the canvas container ID when a container is clicked
+       * @param {HTMLElement} element - The clicked container
+       */
+      function onIframeContainerClick(element) {
+        wearfits.canvas_container_id = element.id;
+      }
+
+      /**
+       * Toggles the size of the container when the resize button is clicked
+       * @param {HTMLElement} element - The container element
+       */
+      function onButtonClick(element) {
+        element.style.width = (element.style.width !== "60%") ? "60%" : "30%";
+        element.style.height = (element.style.height !== "60%") ? "60%" : "30%";
+        event.stopPropagation();
+      }
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+      <!-- Multiple containers that switch the WEARFITS viewer upon clicking -->
+      <div id="wearfits_viewer1" class="container" onclick="onIframeContainerClick(this)">
+        <button onclick="onButtonClick(this.parentElement)">Resize</button>
+        <iframe src="https://dev.wearfits.com/viewer?object=example1&noar=1&nocolorlist=1"></iframe>
+      </div>
+      <!-- Repeat similar containers as needed -->
+    </div>
+  </div>
+</body>
+
+</html>

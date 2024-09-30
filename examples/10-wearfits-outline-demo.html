@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WEARFITS: Outline Demo</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Include WEARFITS JavaScript SDK -->
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <style>
+    /* Style for canvas text with outline */
+    .wearfits-canvas-text {
+      color: black !important;
+      -webkit-filter: drop-shadow(0px 0px 1px white) !important;
+      filter: drop-shadow(0px 0px 1px white) !important;
+    }
+
+    /* Full-page layout */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    .content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #wearfits_viewer {
+      width: 50%;
+      height: 50%;
+      display: inline-block;
+    }
+  </style>
+
+  <script>
+    // Initialize WEARFITS with outline settings
+    wearfits.origin = "https://dev.wearfits.com";
+    wearfits.current_garment_name = "Top";
+    wearfits.loadDefaultOrCreateIt();
+
+    wearfits.showRayTracingButton = false;
+    wearfits.showARButton = false;
+    wearfits.showMaterialPresets = true;
+    wearfits.showSizeSelectionUI = true;
+    wearfits.showAvatarSelectionUI = true;
+    wearfits.showComfortMapButton = true;
+    wearfits.showOutline = true;
+    wearfits.enableAvatarAOMap = false;
+    wearfits.loadFloor = false;
+    wearfits.zoomFactor = 1.18;
+
+    // Enable strain view (heatmap) based on URL parameter
+    const enabledStrainView = parseInt(new URL(window.location.href).searchParams.get("strainView"));
+
+    let canvas = null;
+    let texture = null;
+
+    if (enabledStrainView) {
+      wearfits.isStrainView = true;
+    }
+
+    // Event listener for garment and avatar load
+    wearfits.addEventListener("avatar_and_garment_load", function () {
+      // Hide non-avatar meshes
+      wearfits.avatar.meshes.forEach(mesh => {
+        if (!mesh.name.includes("avatar")) {
+          wearfits.scene.remove(mesh);
+        }
+      });
+
+      // Activate strain button if enabled
+      if (enabledStrainView) {
+        window.wearfits_toggle_strain_map_button.classList.add('wf_active_button');
+      }
+
+      modifyGarment();
+
+      // Configure outline pass for garment meshes
+      wearfits.outlinePass.selectedObjects = wearfits.garment.meshes;
+      wearfits.outlinePass.selectedMaterials = wearfits.garment.mesh.material;
+    });
+
+    /**
+     * Modifies the garment geometry based on user parameters
+     */
+    function modifyGarment() {
+      let geometry = wearfits.garment.geometry;
+
+      if (!geometry) {
+        geometry = THREE.BufferGeometryUtils.mergeVertices(wearfits.garment.mesh.geometry);
+        geometry = new THREE.Geometry().fromBufferGeometry(geometry);
+        wearfits.garment.geometry = geometry;
+      }
+
+      geometry = geometry.clone();
+      const vertices = geometry.vertices;
+      const faces = geometry.faces;
+      const faceVertexUv = geometry.faceVertexUvs[0];
+
+      const length = parseFloat(sleeve_length.value);
+      const width = parseFloat(sleeve_width.value);
+      const min_x = 0.57;
+      const max_y = 0.3;
+
+      // Assign faces to vertices
+      faces.forEach((face, i) => {
+        ['a', 'b', 'c'].forEach(vertex => {
+          vertices[face[vertex]].faces = vertices[face[vertex]].faces || [];
+          vertices[face[vertex]].faces.push(i);
+        });
+      });
+
+      // Select faces based on UV coordinates
+      let selected_faces = new Set();
+      let selected_vertices = new Set();
+
+      faceVertexUv.forEach((uvs, i) => {
+        uvs.forEach(uv => {
+          if (uv.x > min_x) {
+            selected_faces.add(i);
+            selected_vertices.add(faces[i].a);
+            selected_vertices.add(faces[i].b);
+            selected_vertices.add(faces[i].c);
+          }
+        });
+      });
+
+      // Modify selected vertices
+      selected_vertices.forEach(i => {
+        let vertex = vertices[i];
+        let face_idx = vertex.faces[0];
+        let face = faces[face_idx];
+        let normal = face.normal.clone().multiplyScalar(width * 0.02);
+        vertex.add(normal);
+      });
+
+      // Remove specific faces based on UV
+      let remove_list = new Set();
+      faceVertexUv.forEach((uvs, i) => {
+        uvs.forEach(uv => {
+          if (uv.x > min_x && uv.y < max_y * length) {
+            remove_list.add(i);
+          }
+        });
+      });
+
+      // Filter out faces to be removed
+      geometry.faces = geometry.faces.filter((face, i) => !remove_list.has(i));
+      geometry.faceVertexUvs[0] = geometry.faceVertexUvs[0].filter((_, i) => !remove_list.has(i));
+
+      // Update geometry
+      geometry.elementsNeedUpdate = geometry.verticesNeedUpdate = true;
+      let buffer_geometry = geometry.toBufferGeometry();
+
+      wearfits.garment.mesh.geometry = THREE.BufferGeometryUtils.mergeVertices(buffer_geometry);
+      wearfits.garment.mesh.geometry.needsUpdate = true;
+      wearfits.garment.mesh.needsUpdate = true;
+      wearfits.forceRenderWithTimeout();
+    }
+
+    /**
+     * Updates the length parameter and modifies the garment accordingly
+     */
+    function updateLength() {
+      modifyGarment();
+    }
+
+    /**
+     * Updates the width parameter and modifies the garment accordingly
+     */
+    function updateWidth() {
+      modifyGarment();
+    }
+  </script>
+</head>
+
+<body style="margin: 0px;">
+  <div id="wrapper">
+    <div class="content">
+      <!-- WEARFITS Viewer with outline -->
+      <div id="wearfits_viewer" style="width:100%; height:100%; display:inline-block;"></div>
+
+      <!-- Range inputs for modifying garment -->
+      <div style="position: absolute; right:0; bottom:30px;">
+        <input id="sleeve_length" type="range" value="0.5" min="0" max="1" step="0.01" oninput="updateLength()">
+      </div>
+      <div style="position: absolute; right:0; bottom:10px;">
+        <input id="sleeve_width" type="range" value="0" min="-1" max="1" step="0.01" oninput="updateWidth()">
+      </div>
+    </div> 
+  </div> 
+</body>
+
+</html>

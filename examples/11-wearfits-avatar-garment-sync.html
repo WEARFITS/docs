@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WEARFITS: Avatar and Garment Synchronization</title>
+
+  <!-- Include WEARFITS JavaScript SDK -->
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <script>
+    // Configure WEARFITS settings for avatar and garment synchronization
+    wearfits.current_garment_name = "Melia";
+    wearfits.showRayTracingButton = false;
+    wearfits.showARButton = false;
+    wearfits.showMaterialPresets = false;
+    wearfits.showSizeSelectionUI = false;
+    wearfits.showAvatarSelectionUI = false;
+    wearfits.showComfortMapButton = false;
+
+    // Load the default garment or create it if not available
+    wearfits.loadDefaultOrCreateIt();
+
+    // Event listener for when avatar and garment are loaded
+    wearfits.addEventListener("avatar_and_garment_load", () => {
+      updateSizeList();
+      updateColorList();
+      updatePreferredSize();
+    });
+
+    /**
+     * Updates the size selection dropdown based on the garment
+     */
+    function updateSizeList() {
+      const sizes = wearfits.sizesByName[wearfits.current_garment_name] || [];
+      const sizeList = window.size_list;
+      sizeList.innerHTML = "";
+
+      sizes.forEach(size => {
+        const option = document.createElement('option');
+        option.value = size;
+        option.text = size;
+        if (size === wearfits.current_garment_size) {
+          option.selected = true;
+        }
+        sizeList.appendChild(option);
+      });
+    }
+
+    /**
+     * Updates the color selection dropdown based on the garment
+     */
+    function updateColorList() {
+      const colorSelect = window.color_select;
+      colorSelect.innerHTML = "";
+      colorSelect.onchange = "";
+
+      wearfits.garments.forEach(garment => {
+        if (garment.name === wearfits.current_garment_name) {
+          colorSelect.onchange = function () {
+            wearfits.loadMaterialSet(this.value, garment);
+          };
+          garment.material_sets.forEach(material_set => {
+            const option = document.createElement('option');
+            option.value = material_set.name;
+            option.text = material_set.name;
+            if (material_set.name === garment.preset) {
+              option.selected = true;
+            }
+            colorSelect.appendChild(option);
+          });
+        }
+      });
+    }
+
+    /**
+     * Updates the preferred size display based on the garment
+     */
+    function updatePreferredSize() {
+      window.prefered_size.innerHTML = wearfits.getPreferedSize();
+    }
+
+    /**
+     * Loads the avatar with specified measurements
+     */
+    async function loadAvatar() {
+      const avatarProp = {
+        height: parseInt(height.value),
+        chest: parseInt(chest.value),
+        waist: parseInt(waist.value),
+        buttock: parseInt(buttock.value)
+      };
+
+      await wearfits.setAvatarProperties(avatarProp);
+      wearfits.showToast("Avatar loaded successfully!");
+    }
+  </script>
+
+  <style>
+    /* Styles for input boxes */
+    .box {
+      padding: 7px;
+      margin: 15px;
+      border-top: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content" style="display:flex; height: 100%;">
+      <!-- WEARFITS Viewer -->
+      <div id="wearfits_viewer" style="width:50%; height:100%; display:inline-block;"></div>
+
+      <div style="width:50%; height:100%; margin: 15px; display:inline-block;">
+        <!-- Measurement Inputs -->
+        <div class="box">
+          <div>Height <input type="number" id="height" value="165"></div>
+          <div>Chest <input type="number" id="chest" value="88"></div>
+          <div>Waist <input type="number" id="waist" value="70"></div>
+          <div>Buttock <input type="number" id="buttock" value="94"></div>
+          <div><button onclick="loadAvatar()">Load Avatar</button></div>
+        </div>
+
+        <!-- Garment Selection -->
+        <div class="box">
+          Garment Select
+          <select id="garment_list" onchange="wearfits.setGarmentName(this.value)">
+            <option value="Melia">Melia</option>
+            <option value="Burda3">Burda</option>
+            <option value="Burda8">Burda 2</option>
+            <option value="4F BLMF901 SPMTR901">Man Test</option>
+          </select>
+        </div>
+
+        <!-- Size Selection -->
+        <div class="box">
+          Select Size <select id="size_list" onchange="wearfits.setSize(this.value)"></select>
+        </div>
+
+        <!-- Color Selection -->
+        <div class="box">
+          Select Color
+          <select id="color_select" onchange="wearfits.loadMaterialSet(this.value)"></select>
+        </div>
+
+        <!-- Strain Map Toggle -->
+        <div class="box">
+          <button onclick="wearfits.toggleStrainMap()">Toggle Strain View</button>
+        </div>
+
+        <!-- AR Link Button -->
+        <div class="box">
+          <button onclick="window.open(wearfits.getARLink())">Open AR</button>
+        </div>
+
+        <!-- Preferred Size Display -->
+        <div class="box">
+          Preferred Size <span id="prefered_size"></span>
+        </div>
+      </div>
+    </div> 
+  </div>
+</body>
+
+</html>

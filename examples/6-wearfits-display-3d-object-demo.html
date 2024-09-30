@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <title>WEARFITS: Display 3D Object Demo</title>
+
+  <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+
+  <script>
+    // Configure WEARFITS settings
+    wearfits.origin = "https://dev.wearfits.com";
+    wearfits.canvas_container_id = "wearfits_viewer";
+    wearfits.showARButton = true;
+    wearfits.showRayTracingButton = false;
+
+    // Load the specified object by ID
+    wearfits.load("f047b708df18a56738ac8428c2ec1b8b");
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="content">
+      <!-- Viewer container -->
+      <div id="wearfits_viewer" style="width:40%; height:60%;"></div>
+    </div> 
+  </div>
+</body>
+
+</html>
