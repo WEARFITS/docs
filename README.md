@@ -388,45 +388,116 @@ The AR Try-On feature allows users to virtually try on shoes, bags, and backpack
 | `/tryon` | Provides the footwear AR Try-On experience. May be used as a direct link or via QR-code. Currently supported product types: shoes, bags, backpacks. Additional parameters are described below. |
 | `/tryon/dev` | Currently developed version with new functionallities. Do not use in production environment. |
 
+*💡 Utility tool allowing for changing camera, quality and mirroring options may be displayed by clicking 4 times in top right corner of the Try-On Viewer.*
 
-#### List of query string parameters
+#### List of main query string parameters
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
 | `object` (required) | `string` | Specifies the object ID or URL to 3D model (`.glb`)                                | Any valid URL or object ID | `null`|
-| `quality`        | `string` | Sets the quality of the rendering                                      | `low`, `high`| `high`|
-| `pose`           | `number` | Required for try-on of bags, backpacks and garments   | `0` or `1` | `null`|
-| `low_quality_mode` | `number` | Forces low quality mode for low end devices | `0` or `1` | `0` |
+| `color`         | `string` | Colorset id of the object | Any valid color name | `null` |
+| `pose`          | `number` | Required for try-on of bags, backpacks and garments   | `0` or `1` | `0`|
+| `mm`            | `number` | Enables the Mirror Mode with chosen quality  | `1` (lowest), `2` (use pose model), or `3` (use pose and mask) | `0` (not Mirror Mode) |
+| `res`           | `string` | Specifies the resolution of the camera input. Can be one of: `vga`, `hd`, `fhd`, `qhd`, `uhd`, `4k` or a custom resolution like `1920x1200` | Any valid resolution string | `fhd`|
+| `camera_id`     | `string` | Specifies the camera device ID | `"string"` | `null`|
+| `flip_x`        | `number` | Specifies if the camera input on the `x` axis should be flipped | `0` or `1` | `0`|
+| `flip_y`        | `number` | Specifies if the camera input on the `y` axis should be flipped | `0` or `1` | `0`|
+| `rotated`       | `number` | Specifies if the camera input should be rotated | `0` or `1` | `0`|
 
-*💡 Utility tool allowing for changing camera, quality and mirroring options may be displayed by clicking 4 times in top right corner of the Try-On Viewer.*
 
-#### Additional query string parameters for development and debugging
-
-| Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
-|------------------|----------|------------------------------------------------------|---------------------------------------|---------------------|
-| `debug`          | `number` | Enables debug mode when set to `1`                | `0` or `1`            | `0`|
-| `ml_model_url`   | `string` | URL to the ML model in JSON format                       | Any valid URL or `small`, `medium`| `null`|
-| `tf_backend`     | `string` | Forces the AI backend to use                                     | `webgpu`, `wasm`, or `webgl`| `null` (auto detect)|
-| `onnx`           | `number` | Enables ONNX framework instead of TF.js when set to `1`| `0`, `1`| `0`
-
-*💡 `webgpu` mode offers the best performance, but is not supported on all devices yet (iOS requires to enable WebGPU manually in Safari settings).*
-
-#### Mirror Mode
-
-Mirror Mode allows embedding the Footwear AR Try-On Viewer within an `iframe` to create a mirrored display of the try-on session. This mode is useful for scenarios such as integrating the viewer into a screen with camera. Mirror Mode is enabled by setting the `mm` parameter.
+#### List of more query string parameters
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
-| `mm`             | `number` | Enables the Mirror Mode with chosen quality  | `1` (lowest), `2`, or `3` (high) | `null` (not Mirror Mode) |
-| `res`            | `string` | Specifies the resolution of the camera input. Can be one of: `vga`, `hd`, `fhd`, `qhd`, `uhd`, `4k` or a custom resolution like `1920x1200` | Any valid resolution string | `hd`|
-| `camera_id`     | `string` | Specifies the camera device ID - must be a 64 character length string | 64 character length string | `null`|
-| `flip_x`        | `number` | Specifies if the camera input on the `x` axis should be flipped. Can be `0` (default) or `1` (flipped) | `0` or `1` | `0`|
-| `flip_y`        | `number` | Specifies if the camera input on the `y` axis should be flipped. Can be `0` (default) or `1` (flipped) | `0` or `1` | `0`|
-| `rotated`       | `number` | Specifies if the camera input should be rotated. Can be `0` (default) or `1` (rotated) | `0` or `1` | `0`|
+| `quality`        | `string` | Sets the quality of the rendering                                      | `low`, `medium`, `high`, `auto` | `auto` |
+| `ml_model_url`   | `string` | URL to the ML model in JSON format                       | Any valid URL or `small`, `medium`| `null`|
+| `tf_backend`     | `string` | Forces the AI backend to use                                     | `webgpu`, `wasm`, or `webgl`| `null` (auto selected)|
+| `nocamera` | `number` | Disables camera and uses video as input | `0` or `1` | `0` |
+| `debug_video_clip` | `string` | Debug video clip used with nocamera parameter | Valid URL | `null` |
+| `native_ml_version` | `string` | Native ML version to use | Valid version string | `null` |
+| `object_scale` | `number` | Object scale | Any positive float | `1.0` |
+| `nologo` | `number` | Hides logo | `0` or `1` | `0` |
+| `object_collection_id` | `string` | group id used in demo. Allows user to change shoes withing group by swiping left or right. Group of models is defined by admin   | `null` |
+| `object_carousel_interval` | `number` | Used with object_collection_id, automatic shoe rotation time in seconds | Positive integer | `null` |
+| `fps` | `number` | FPS limit | Positive integer | `null` |
+| `zoom` | `number` | Camera zoom | Positive integer | `100` |
+| `show_snapshot_button` | `number` | Shows snapshot button | `0` or `1` | `0` |
+| `handbag` | `number` | Enables handbag mode | `0` or `1` | `0` |
+| `show_back_button` | `number` | Shows back button | `0` or `1` | `0` |
+| `banner_text` | `string` | Banner text | Any string | `null` |
+| `banner_url` | `string` | Banner URL | Valid URL | `null` |
+| `banner_icon` | `number` | Banner icon | `0` or `1` | `null` |
+| `set_crop_region_from_pose` | `number` | Sets crop region from pose | `0` or `1` | `1` |
+| `display_objects_after` | `number` | Delay for displaying objects after foot detection | Non-negative integer | `0` |
+| `hide_one` | `number` | Hides shoes if only one foot is detected | `0` or `1` | `0` |
+| `loop` | `number` | Loops animation | `0` or `1` | `0` |
+| `noloader` | `number` | Hides loader | `0` or `1` | `0` |
+| `sound` | `string` | URL of sound to play | Valid URL | `null` |
+| `colorlist` | `number` | Shows color list | `0` or `1` | `0` |
+| `compose_method` | `string` | Composition method, changing may increase performance | `"canvas"`, `"scene"`, or `"shader"` | `"canvas"` (auto selected) |
+| `calibration_data` | `string` | Calibration data (base64 encoded) | Valid base64 string | `null` |
+
+
+*💡 `webgpu` mode offers the best performance, but is not supported on all devices yet (iOS requires to enable WebGPU manually in Safari settings).*
 
 #### Communicating with the Viewer via IFRAME
 
-To enable interaction between the parent page and the Footwear AR-TryOn Viewer embedded within an `iframe`, the [Window.postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) API is utilized. This allows for secure cross-origin communication.
+Demo with iframe comunication: https://dev.wearfits.com/demo/tryoniframe
+
+The communication is done using the postMessage API for sending messages to the iframe
+
+Sending messages to the iframe:
+1. Get a reference to the iframe's content window:
+   const tryon_iframe_element = document.getElementById('tryon_iframe').contentWindow;
+
+2. Use postMessage to send a message:
+   tryon_iframe_element.postMessage(JSON.stringify(message), "*")
+   where message is an object with 'name' and 'data' properties (Examples bellow).
+
+Available commands:
+1. Load a shoe model: 
+```json
+   { 
+		name: "load_object", 
+		data: <shoeId> 
+	}
+```
+2. Enable/disable camera: 
+```json
+   { 
+		name: "enable_camera", 
+		data: <0 or 1> 
+	}
+```
+
+Receiving messages from the iframe:
+1. Add an event listener for the 'message' event on the window object.
+2. Check if the message source is the iframe.
+3. Parse the event data (it's a JSON string).
+4. Handle the event based on its name.
+
+Available events from the iframe:
+- loadingProgressHandler: Triggered during app load. data is the loading progress percentage (int)
+- loadingFinishedHandler: Triggered when app is loaded. data is null or an error code (int)
+- objectLoadingProgressHandler: Triggered during object loading. data is the object loading progress percentage (int)
+- objectLoadingFinishedHandler: Triggered when object finished loading. data is an object, error field is missing if object is loaded successfully { id: string, error: int }
+- shoesVisibilityChangedHandler: Triggered when feet visibility is changed. data is a boolean indicating visibility
+
+#### Error codes
+    1:  "Unknown error", // Any other error not listed bellow
+    10: "Camera error (10)", // Camera undefined error
+    11: "Camera not found (11)", // Camera not found
+    12: "Camera disabled in browser (12)", // navigator.mediaDevices.getUserMedia is undefined
+    13: "Camera permission denied (13)", // Camera permission denied
+    14: "Camera error (14)", // Camera device not readable
+    15: "Camera disabled in browser (15)", // WKWebView without allowsInlineMediaPlayback 
+    20: "Device not supported (20)", // Failed to load ML model, unknown error
+    21: "Device not supported (21)", // Failed to compile fragment shader
+    30: "Load error (30)", // 3D model load unknown error
+    31: "Load error (31)", // 3D model not found
+    32: "Connection error (32)", // 3D model download error
+    33: "Unauthorized model url (33)", // Unauthorized url origin
+    34: "Aborted loading (34)", // Connection aborted when trying to load new object
 
 #### SDK for iOS and Android
 
