@@ -1,8 +1,8 @@
 # WEARFITS API
 
-![WEARFITS](logo/wearfits_logo_sq_bl_sm.png)
+![WEARFITS](img/wearfits_logo_sq_bl_sm.png)
 
-WEARFITS is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality, Machine Learning, and Generative AI, WEARFITS provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.
+**[WEARFITS](https://wearfits.com) is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality, Machine Learning, and Generative AI, WEARFITS provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.**
 
 
 
@@ -26,7 +26,15 @@ WEARFITS is a comprehensive web application designed for virtual try-ons and siz
 
 The AR Try-On feature allows users to virtually try on shoes, bags, and backpacks in real-time using their mobile device's camera. It can be accessed via a direct link or by scanning a QR code.
 
-#### List of endpoints
+### Demo
+
+Scan the AR code below or click this link on your mobile device: [https://dev.wearfits.com/tryon](https://dev.wearfits.com/tryon)
+
+![WEARFITS](img/wearfits_shoes_ar_qr.png)
+
+### API
+
+#### List of endpoints:
 
 | Endpoint | Description |
 |----------|-------------|
@@ -35,7 +43,7 @@ The AR Try-On feature allows users to virtually try on shoes, bags, and backpack
 
 *💡 Utility tool allowing for changing camera, quality and mirroring options may be displayed by clicking 4 times in top right corner of the Try-On Viewer.*
 
-#### List of main query string parameters
+#### List of main query string parameters:
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
@@ -50,7 +58,7 @@ The AR Try-On feature allows users to virtually try on shoes, bags, and backpack
 | `rotated`       | `number` | Specifies if the camera input should be rotated | `0` or `1` | `0`|
 
 
-#### List of more query string parameters
+#### List of additional query string parameters:
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
@@ -90,6 +98,7 @@ The AR Try-On feature allows users to virtually try on shoes, bags, and backpack
 ### Digital Mirror - Communicating with the Viewer via IFRAME
 
 Examples:
+
 - **CodePen:** [https://codepen.io/wearfits/pen/poMjQOz](https://codepen.io/wearfits/pen/poMjQOz)
 - **GitHub:** [examples/14-wearfits-digital-mirror-communication.html](examples/14-wearfits-digital-mirror-communication.html)
 
@@ -118,16 +127,16 @@ The communication is done using the postMessage API for sending messages to the 
 	```json
 	{ 
 		name: "load_object", 
-		data: <shoeId> 
+		data: "<objectId>"
 	}
 	```
 
 2. Enable/disable camera: 
 
 	```json
-	{ 
-		name: "enable_camera", 
-		data: <0 or 1> 
+	{
+		"name": "enable_camera",
+		"data": 0 // can be 0 or 1
 	}
 	```
 
@@ -148,7 +157,7 @@ The communication is done using the postMessage API for sending messages to the 
 | `objectLoadingFinishedHandler`    | Triggered when object finished loading                                                         | An object, error field is missing if object is loaded successfully `{ id: string, error: int }` |
 | `shoesVisibilityChangedHandler`   | Triggered when feet visibility is changed                                                     | A `boolean` indicating visibility                                                                |
 
-#### Error codes
+#### Error codes:
 
 | Error Code | Error Message                                              | Error Description |
 |------------|---------------------------------------------------------------|-------------|
@@ -334,7 +343,7 @@ It returns:
       "garment_name": "<string>",
       "user_measurements": "<object>",
       "prefered_size": "<string>",
-      "sizes": ["<string>", "<string>", ...]
+      "sizes": ["<string>", "<string>", "..."]
     }
   }
   ```
@@ -421,9 +430,6 @@ Use one of the following endpoints in the IFRAME source:
 Example URL: `https://dev.wearfits.com/render3/Burda3?preset=wariant2&nocolorlist=0&lang=en&size=40`
 
 
-#### Communication with IFRAME
-
-TBP
 
 
 
@@ -556,4 +562,6 @@ Example URL: `https://dev.wearfits.com/viewer?object=backpack&preset=red&nocolor
 
 ## Contact
 
-For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).
+**For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
+
+Our website: [https://wearfits.com](https://wearfits.com)
