@@ -2,9 +2,7 @@
 
 ![WEARFITS](img/wearfits_logo_sq_bl_sm.png)
 
-**[WEARFITS](https://wearfits.com) is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality, Machine Learning, and Generative AI, WEARFITS provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.**
-
-
+**[WEARFITS](https://wearfits.com) is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality (AR), Machine Learning, and Generative AI, WEARFITS provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.**
 
 ## Products
 
@@ -20,7 +18,6 @@
 | Any object                   | **[3D and AR Viewer](#3d-and-ar-viewer)**        | Instant visualization of 3D models of any objects on the web and in AR     | 3D model of an object (`OBJ`, `GLB`, `FBX`, etc.)              |
 
 *Check also our [examples repository](examples/README.md).*
-
 
 ## Footwear and Bags: AR Try-On
 
@@ -38,31 +35,30 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 
 | Endpoint | Description |
 |----------|-------------|
-| `/tryon` | Provides the footwear AR Try-On experience. May be used as a direct link or via QR-code. Currently supported product types: shoes, bags, backpacks. Additional parameters are described below. |
-| `/tryon/dev` | Currently developed version with new functionallities. Do not use in production environment. |
+| `/tryon` | Provides the footwear AR Try-On experience. May be used as a direct link or via QR code. Currently supports product types such as shoes, bags, and backpacks. Additional parameters are described below. |
+| `/tryon/dev` | Currently developed version with new functionalities. Do not use in production environment. |
 
-*💡 Utility tool allowing for changing camera, quality and mirroring options may be displayed by clicking 4 times in top right corner of the Try-On Viewer.*
+*💡 Utility tool allowing for changing camera, quality, and mirroring options may be displayed by clicking 4 times in the top right corner of the Try-On Viewer.*
 
 #### List of main query string parameters:
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
-| `object` (required) | `string` | Specifies the object ID or URL to 3D model (`.glb`)                                | Any valid URL or object ID | `null`|
-| `color`         | `string` | Colorset id of the object | Any valid color name | `null` |
-| `pose`          | `number` | Required for try-on of bags, backpacks and garments   | `0` or `1` | `0`|
+| `object` (required) | `string` | Specifies the object ID or URL to the 3D model (`.glb`)                                | Any valid URL or object ID | `null`|
+| `color`         | `string` | Colorset ID of the object | Any valid color name | `null` |
+| `pose`          | `number` | Required for try-on of bags, backpacks, and garments   | `0` or `1` | `0`|
 | `mm`            | `number` | Enables the Mirror Mode with chosen quality  | `1` (lowest), `2` (use pose model), or `3` (use pose and mask) | `0` (not Mirror Mode) |
-| `res`           | `string` | Specifies the resolution of the camera input. Can be one of: `vga`, `hd`, `fhd`, `qhd`, `uhd`, `4k` or a custom resolution like `1920x1200` | Any valid resolution string | `fhd`|
+| `res`           | `string` | Specifies the resolution of the camera input. Can be one of: `vga`, `hd`, `fhd`, `qhd`, `uhd`, `4k`, or a custom resolution like `1920x1200` | Any valid resolution string | `fhd`|
 | `camera_id`     | `string` | Specifies the camera device ID | `"string"` | `null`|
 | `flip_x`        | `number` | Specifies if the camera input on the `x` axis should be flipped | `0` or `1` | `0`|
 | `flip_y`        | `number` | Specifies if the camera input on the `y` axis should be flipped | `0` or `1` | `0`|
 | `rotated`       | `number` | Specifies if the camera input should be rotated | `0` or `1` | `0`|
 
-
 #### List of additional query string parameters:
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
-| `quality`        | `string` | Sets the quality of the rendering                                      | `low`, `medium`, `high`, `auto` | `auto` |
+| `quality`        | `string` | Sets the rendering quality                                      | `low`, `medium`, `high`, `auto` | `auto` |
 | `ml_model_url`   | `string` | URL to the ML model in JSON format                       | Any valid URL or `small`, `medium`| `null`|
 | `tf_backend`     | `string` | Forces the AI backend to use                                     | `webgpu`, `wasm`, or `webgl`| `null` (auto selected)|
 | `nocamera` | `number` | Disables camera and uses video as input | `0` or `1` | `0` |
@@ -70,7 +66,7 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 | `native_ml_version` | `string` | Native ML version to use | Valid version string | `null` |
 | `object_scale` | `number` | Object scale | Any positive float | `1.0` |
 | `nologo` | `number` | Hides logo | `0` or `1` | `0` |
-| `object_collection_id` | `string` | group id used in demo. Allows user to change shoes withing group by swiping left or right. Group of models is defined by admin   | `null` |
+| `object_collection_id` | `string` | Group ID used in demo. Allows user to change shoes within the group by swiping left or right. Group of models is defined by admin   | `null` |
 | `object_carousel_interval` | `number` | Used with object_collection_id, automatic shoe rotation time in seconds | Positive integer | `null` |
 | `fps` | `number` | FPS limit | Positive integer | `null` |
 | `zoom` | `number` | Camera zoom | Positive integer | `100` |
@@ -87,13 +83,10 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 | `noloader` | `number` | Hides loader | `0` or `1` | `0` |
 | `sound` | `string` | URL of sound to play | Valid URL | `null` |
 | `colorlist` | `number` | Shows color list | `0` or `1` | `0` |
-| `compose_method` | `string` | Composition method, changing may increase performance | `"canvas"`, `"scene"`, or `"shader"` | `"canvas"` (auto selected) |
+| `compose_method` | `string` | Composition method; changing may increase performance | `"canvas"`, `"scene"`, or `"shader"` | `"canvas"` (auto selected) |
 | `calibration_data` | `string` | Calibration data (base64 encoded) | Valid base64 string | `null` |
 
-
-*💡 `webgpu` mode offers the best performance, but is not supported on all devices yet (iOS requires to enable WebGPU manually in Safari settings).*
-
-
+*💡 `webgpu` mode offers the best performance but is not supported on all devices yet (iOS requires enabling WebGPU manually in Safari settings).*
 
 ### Digital Mirror - Communicating with the Viewer via IFRAME
 
@@ -118,11 +111,11 @@ The communication is done using the postMessage API for sending messages to the 
    tryon_iframe_element.postMessage(JSON.stringify(message), "*")
    ```
 
-   where message is an object with `name` and `data` properties (examples bellow).
+   where `message` is an object with `name` and `data` properties (examples below).
 
 **Available commands:**
 
-1. Load an object (e.g. a shoe) model: 
+1. Load an object (e.g., a shoe) model: 
 
 	```json
 	{ 
@@ -152,16 +145,16 @@ The communication is done using the postMessage API for sending messages to the 
 | Event Name                     | Description                                                                                     | Data Type                                                                                     |
 |--------------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | `loadingProgressHandler`          | Triggered during app load                                                                     | Loading progress percentage (`int`)                                                             |
-| `loadingFinishedHandler`          | Triggered when app is loaded                                                                   | null or an error code (`int`)                                                                   |
+| `loadingFinishedHandler`          | Triggered when the app is loaded                                                                   | null or an error code (`int`)                                                                   |
 | `objectLoadingProgressHandler`    | Triggered during object loading                                                                | Object loading progress percentage (`int`)                                                      |
-| `objectLoadingFinishedHandler`    | Triggered when object finished loading                                                         | An object, error field is missing if object is loaded successfully `{ id: string, error: int }` |
-| `shoesVisibilityChangedHandler`   | Triggered when feet visibility is changed                                                     | A `boolean` indicating visibility                                                                |
+| `objectLoadingFinishedHandler`    | Triggered when the object finishes loading                                                         | An object; error field is missing if the object is loaded successfully `{ id: string, error: int }` |
+| `shoesVisibilityChangedHandler`   | Triggered when feet visibility changes                                                     | A `boolean` indicating visibility                                                                |
 
 #### Error codes:
 
 | Error Code | Error Message                                              | Error Description |
 |------------|---------------------------------------------------------------|-------------|
-| `1`          | Unknown error                                             | Any other error not listed below                          |
+| `1`          | Unknown error                                             | Any other errors not listed below                          |
 | `10`         | Camera error                                       | Camera undefined error                                     |
 | `11`         | Camera not found                                   | Camera not found                                          |
 | `12`         | Camera disabled in browser                         | navigator.mediaDevices.getUserMedia is undefined         |
@@ -173,16 +166,12 @@ The communication is done using the postMessage API for sending messages to the 
 | `30`         | Load error                                         | 3D model load unknown error                               |
 | `31`         | Load error                                         | 3D model not found                                        |
 | `32`         | Connection error                                   | 3D model download error                                   |
-| `33`         | Unauthorized model URL                             | Unauthorized url origin                                   |
-| `34`         | Aborted loading                                   | Connection aborted when trying to load new object         |
-
-
+| `33`         | Unauthorized model URL                             | Unauthorized URL origin                                   |
+| `34`         | Aborted loading                                   | Connection aborted when trying to load a new object         |
 
 ### SDK for iOS and Android
 
-The preferred method is simple and quick browser-based integration, but we may also provide SDK for native integration of the Footwear AR Try-On into iOS and Android apps. [Ask us](#contact) for more details.
-
-
+The preferred method is simple and quick browser-based integration, but we may also provide an SDK for native integration of the Footwear AR Try-On into iOS and Android apps. [Ask us](#contact) for more details.
 
 ## Footwear: Scan and Fit
 
@@ -190,16 +179,12 @@ Our mobile app for iOS and Android allows users to scan their feet using just a 
 
 [Contact us](#contact) for integration details.
 
-
-
 ## Footwear and Bags: 2D-to-3D Converter
 
 - Our web tool allows for the automatic conversion of 2D images to 3D models.
 - The converter is available at: [https://dev.wearfits.com/upload](https://dev.wearfits.com/upload)
 - Anonymous service is limited and may be disabled at times. Files are deleted periodically.
 - [Contact us](#contact) for more details.
-
-
 
 ## Apparel: 3D Virtual Try-On and Size Fitting
 
@@ -282,11 +267,9 @@ Examples:
 
 To embed multiple viewers on the same website, load the JS file with the `instancesCount` parameter as shown below:
 
-
 ```html
 <script type="text/javascript" src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js?instancesCount=2"></script>
 ```
-
 
 For additional viewers, use `wearfits_X` object names (e.g., `wearfits`, `wearfits_1`, `wearfits_2`, etc.).
 
@@ -312,7 +295,6 @@ An advanced implementation example with external and customized controls can be 
 
 To display two garments on the avatar, use the following function instead of `loadDefaultOrCreateIt()`:
 
-
 ```javascript
 wearfits.loadByHashAndId("<avatar_id>", ["<id1>_<size>", "<id2>_<size>"]);
 ```
@@ -336,17 +318,17 @@ wearfits.fetchGarmentMetadata(user_measurements, garment_name, garment_color);
 ```
 
 It returns:
-  ```json
-  {
-    "name": "fetchGarmentMetadata",
-    "data": {
-      "garment_name": "<string>",
-      "user_measurements": "<object>",
-      "prefered_size": "<string>",
-      "sizes": ["<string>", "<string>", "..."]
-    }
-  }
-  ```
+```json
+{
+	"name": "fetchGarmentMetadata",
+	"data": {
+		"garment_name": "<string>",
+		"user_measurements": "<object>",
+		"preferred_size": "<string>",
+		"sizes": ["<string>", "<string>", "..."]
+	}
+}
+```
 
 To change the style of the fit information text, modify the CSS class `wearfits-fit-info-text`:
 
@@ -363,29 +345,26 @@ wearfits.updateAvatarAndGarment(user_measurements, garment_name, garment_size, g
 ```
 
 It returns:
-  ```json
-  {
-    "name": "updateAvatarAndGarment",
-    "data": {
-      "garment_name": "<string>",
-      "garment_size": "<string>",
-      "garment_color": "<string>",
-      "user_measurements": "<object>",
-      "fit_data": {
-        "chest": "<string>",
-        "waist": "<string>",
-        "buttock": "<string>"
-      },
-      "garment_measurement_3d": {
-        "height": "<int>"
-      },
-      "prefered_size": "<string>"
-    }
-  }
-  ```
-
-
-
+```json
+{
+	"name": "updateAvatarAndGarment",
+	"data": {
+		"garment_name": "<string>",
+		"garment_size": "<string>",
+		"garment_color": "<string>",
+		"user_measurements": "<object>",
+		"fit_data": {
+			"chest": "<string>",
+			"waist": "<string>",
+			"buttock": "<string>"
+		},
+		"garment_measurement_3d": {
+			"height": "<int>"
+		},
+		"preferred_size": "<string>"
+	}
+}
+```
 
 ### IFRAME
 
@@ -403,9 +382,7 @@ Use one of the following endpoints in the IFRAME source:
 	<iframe src="https://dev.wearfits.com/render3/<id>?lang=en&size=M"></iframe>
 	```
 
-
 #### List of Query String Parameters
-
 
 | Parameter         | Type     | Description                                                   | Accepted Values                     | Default Value                       |
 |-------------------|----------|---------------------------------------------------------------|-------------------------------------|-------------------------------------|
@@ -416,7 +393,7 @@ Use one of the following endpoints in the IFRAME source:
 | `nocolorlist`     | `number`    | Hides the garment color selection list when set to `1`      | `0` or `1`                          | `0`                                 |
 | `noavatarselection`| `number`    | Disables the avatar selection when set to `1`               | `0` or `1`                          | `0`                                 |
 | `nocomfortbutton` | `number`    | Hides the comfort (heatmap) button when set to `1`                    | `0` or `1`                          | `0`                                 |
-| `norenderbutton`  | `number`    | Hides the HQ render button when set to `1`                     | `0` or `1`                          | `0`                                 |
+| `norenderbutton`  | `number` | Hides the HQ render button when set to `1`                     | `0` or `1`                          | `0`                                 |
 | `controlstype`    | `string` | Specifies the type of controls for the viewer               | `mouse`, `touch`					  | `mouse`                             |
 | `background`       | `string` | Sets the background color of the viewer                      | Hex color code (e.g., `ffffff` for white) | `ffffff`                            |
 | `nopan`            | `number` | Disables panning (two-finger object move) when set to `1`  | `0` or `1`                          | `0`                                 |
@@ -440,14 +417,9 @@ Example URL: `https://dev.wearfits.com/render3/Burda3?preset=wariant2&nocolorlis
 
 Generative AI allows for photo-realistic visualization of garments on users with just one photo of a garment. [Ask us](#contact) for a demo.
 
-
-
 ## Apparel: AR Try-On
 
-Augmented Reality allows users to visualize garments on themselves in real time. [Ask us](#contact) for a demo.
-
-
-
+Augmented Reality allows users to visualize garments on themselves in real-time. [Ask us](#contact) for a demo.
 
 ## 3D and AR Viewer
 
@@ -477,7 +449,6 @@ A demo is available at: [https://dev.wearfits.com/demo-footwear](https://dev.wea
 | `/viewer` | 3D viewer which can be embedded into a website or used as a direct link to an object's 3D viewer. Additional parameters are described below. |
 | `/viewar` | AR viewer with automatic detection of client device (iOS/Android), utilizes native system AR functionality. |
 | `/tryon` | AR Try-On viewer used as a direct link or via QR code - currently supported types: shoes, bags, backpacks. Additional parameters are described below. |
-
 
 ### JavaScript API
 
@@ -526,14 +497,11 @@ A demo is available at: [https://dev.wearfits.com/demo-footwear](https://dev.wea
 
 ### IFRAME
 
-
 Use the `/viewer` endpoint in the IFRAME source:
-
 
 ```html
 <iframe style="width:100%;height:100%" src="https://dev.wearfits.com/viewer?object=<id>&<other_parameters>"></iframe>
 ```
-
 
 #### List of Query String Parameters
 
@@ -550,15 +518,6 @@ Use the `/viewer` endpoint in the IFRAME source:
 | `arscale`         | `number` | Sets the initial scale of the object in AR mode               | Any positive number                 | `1`                                 |
 
 Example URL: `https://dev.wearfits.com/viewer?object=backpack&preset=red&nocolorlist=1&autorotate=1`
-
-
-
-
-
-
-
-
-
 
 ## Contact
 
