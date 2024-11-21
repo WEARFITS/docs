@@ -1,8 +1,8 @@
-# WEARFITS API
+# WEARFITS® API
 
 ![WEARFITS](img/wearfits_logo_sq_bl_sm.png)
 
-**[WEARFITS](https://wearfits.com) is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality (AR), Machine Learning, and Generative AI, WEARFITS provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.**
+**[WEARFITS®](https://wearfits.com) is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality (AR), Machine Learning, and Generative AI, WEARFITS® provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.**
 
 ## Products
 
@@ -22,6 +22,9 @@
 ## Footwear and Bags: AR Try-On
 
 The AR Try-On feature allows users to virtually try on shoes, bags, and backpacks in real-time using their mobile device's camera. It can be accessed via a direct link or by scanning a QR code.
+
+<img src="img/wearfits_shoes_ar.webp">
+
 
 ### Demo
 
@@ -418,6 +421,8 @@ Example URL: `https://dev.wearfits.com/render3/Burda3?preset=wariant2&nocolorlis
 
 ## Apparel: Size Recommendation and Heatmap
 
+<img src="img/wearfits_size_fitting_heatmap.png" width="300" alt="WEARFITS Size Fitting Heatmap">
+
 The Size Recommendation and Heatmap feature provides accurate size recommendations and visualizes fit areas using a comfort heatmap. This solution doesn't require 3D models - only product measurements.
 
 Examples:
@@ -645,4 +650,4 @@ Example URL: `https://dev.wearfits.com/viewer?object=backpack&preset=red&nocolor
 
 **For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
 
-Our website: [https://wearfits.com](https://wearfits.com)
+© 2024 [WEARFITS](https://wearfits.com). All rights reserved.

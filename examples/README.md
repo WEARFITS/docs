@@ -1,4 +1,4 @@
-# WEARFITS Examples
+# WEARFITS® Examples
 
 Welcome to the **WEARFITS Examples** repository! This collection showcases various implementations of the WEARFITS service, demonstrating its capabilities in creating interactive 3D/AR fitting rooms, size fitting and customization features.
 
@@ -110,3 +110,5 @@ Demonstrates size recommendations with fitting visualizations displayed as a hea
 ---
 
 *If you find some bugs or have any suggestions, please do not hesitate to [contact us](../README.md#contact).*
+
+© 2024 [WEARFITS](https://wearfits.com). All rights reserved.
