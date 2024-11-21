@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>WEARFITS: Apparel Size Fitting & Recommendation Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Include WEARFITS JavaScript SDK -->
+    <script src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+    <script src="https://dev.wearfits.com/static/js/virtual_advisor.js"></script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        
+        #advisor_container {
+            width: 450px;
+            height: 100%;
+            background: white;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+
+    <script>
+        // Demo garment data with size measurements in centimeters
+        const demo_garment = {
+            name: "DEMO DRESS",
+            // Possible values for product_type:
+            // "TROUSERS", "DRESS", "BERMUDA", "LEGGINGS", "SKIRT", 
+            // "TOPS AND OTHERS", "BLAZER", "WAISTCOAT", "SHIRT", "T-SHIRT"
+            product_type: "DRESS",
+            gender: "w", // Possible values for gender: "m" (men) or "w" (women)
+            sizes: [{
+                name: "XS",
+                chest: 90,
+                waist: 70,
+                buttock: 94,
+                length: 95
+            }, {
+                name: "S", 
+                chest: 96,
+                waist: 76,
+                buttock: 100,
+                length: 96
+            }, {
+                name: "M",
+                chest: 102,
+                waist: 82,
+                buttock: 106,
+                length: 97
+            }, {
+                name: "L",
+                chest: 108,
+                waist: 88,
+                buttock: 112,
+                length: 98
+            }, {
+                name: "XL",
+                chest: 114,
+                waist: 94,
+                buttock: 118,
+                length: 99
+            }]
+        };
+        let itemBodySelection;
+
+        /**
+         * Optional: Custom fit calculation function that determines how well each size fits
+         * Overrides the default WEARFITS fit calculation
+         */
+        async function customFitFunc() {
+            // Get current garment properties and selected size
+            const properties = wearfits.garmentProp[wearfits.current_garment_name];
+            const selectedSize = wearfits.current_garment_size;
+            const measurements = properties.custom.measurement[selectedSize];
+
+            // Calculate fit differences for chest, waist, and buttock
+            // Positive diff = loose fit, Negative diff = tight fit
+            ['chest', 'waist', 'buttock'].forEach(prop => {
+                if (measurements[prop]) {
+                    const diff = measurements[prop] - wearfits.userParams[prop];
+                    
+                    // Determine fit category based on measurement difference
+                    // Within 2cm = good fit, >2cm = loose, <-2cm = tight
+                    let fitText;
+                    if (Math.abs(diff) <= 2) {
+                        fitText = "FIT";
+                    } else if (diff > 2) {
+                        fitText = "LOOSE";
+                    } else {
+                        fitText = "TIGHT";
+                    }
+
+                    // Override default fit display text and difference values
+                    wearfits.measurements[prop].override_text = fitText + " (" + measurements[prop] + " cm)";
+                    wearfits.measurements[prop].override_diff = diff;
+                }
+            });
+
+            // Update UI with fit recommendations
+            const preferredSize = wearfits.getPreferedSize();
+            const fitTypeText = document.getElementById("fit_type_text");
+            if (fitTypeText) {
+                fitTypeText.innerHTML = "HOW THE GARMENT FITS YOUR BODY";
+                
+                // Add size recommendation if current size isn't optimal
+                if (preferredSize === selectedSize) {
+                    fitTypeText.innerHTML += "<br><small style='color: green'>This is your recommended size</small>";
+                } else {
+                    fitTypeText.innerHTML += "<br><small>Size " + preferredSize + " might fit you better</small>";
+                }
+            }
+
+            // Hide mode selection UI element
+            if (itemBodySelection) {
+                itemBodySelection.style.display = "none";
+            }
+        }
+
+        /**
+         * Initializes the WEARFITS virtual advisor when the document loads
+         */
+        async function onDocumentLoad() {
+            // Configure virtual advisor settings
+            wearfits_va.use_outline = true;
+            wearfits_va.custom_fit_func = customFitFunc;
+            wearfits_va.default_mode_ratio = 1.5;
+            
+            // Initialize advisor UI
+            wearfits_va.append("advisor_container");
+            await wearfits_va.set_up_garment_by_prop(demo_garment);
+            await wearfits_va.set_visualization();
+
+            // Hide mode selection UI element
+            itemBodySelection = document.getElementById("item_body_selection");
+            if (itemBodySelection) {
+                 itemBodySelection.style.display = "none";
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', onDocumentLoad);
+    </script>
+</head>
+
+<body>
+    <div id="advisor_container"></div>
+</body>
+</html> 

@@ -12,7 +12,7 @@
 | Footwear & Bags                   | **[2D-to-3D Converter](#footwear-and-bags-2d-to-3d-converter)**    | Automatic conversion of 2D images into 3D models, useful for shoes and bags digitization | Studio photographs (>30) of a product (`JPG`, `PNG`)       |
 | Footwear  | **[Scan and Fit](#footwear-scan-and-fit)**    | Mobile app for precise foot measurements and accurate size recommendations  | Shoe last measurements (e.g. `CSV`, `XLS` or API integration)       |
 | Apparel                 | **[3D Virtual Try-On](#apparel-3d-virtual-try-on-and-size-fitting)**             | Visualization and size fitting of apparel in 3D on mannequin-like avatars of your silhouette size     | Parametric 3D model of a garment (`ZPAC`)           |
-| Apparel                 | **[Size Fitting](#apparel-3d-virtual-try-on-and-size-fitting)**          | Fit heatmaps and size recommendations                                       | Sizing tables or garment measurements (e.g. `CSV`, `XLS` or API integration)       |
+| Apparel                 | **[Size Fitting and Heatmap](#apparel-size-recommendation-and-heatmap)**          | Fit heatmaps and size recommendations                                       | Sizing tables or garment measurements (e.g. `CSV`, `XLS` or API integration)       |
 | Apparel                 | **[Gen-AI Try-On](#apparel-generative-ai-try-on)**             | Visualization of garments on yourself with AI-generated images              | 1 photo of a garment (`JPG`, `PNG`)                   |
 | Apparel                 | **[AR Try-On](#apparel-ar-try-on)**             | Visualization of garments in AR on yourself                  | 3D model of a garment (`OBJ`, `GLB`, `FBX`, etc.)              |
 | Any object                   | **[3D and AR Viewer](#3d-and-ar-viewer)**        | Instant visualization of 3D models of any objects on the web and in AR     | 3D model of an object (`OBJ`, `GLB`, `FBX`, etc.)              |
@@ -31,7 +31,7 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 
 ### API
 
-#### List of endpoints:
+#### Endpoints:
 
 | Endpoint | Description |
 |----------|-------------|
@@ -40,7 +40,7 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 
 *💡 Utility tool allowing for changing camera, quality, and mirroring options may be displayed by clicking 4 times in the top right corner of the Try-On Viewer.*
 
-#### List of main query string parameters:
+#### Main query string parameters:
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
@@ -54,7 +54,7 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 | `flip_y`        | `number` | Specifies if the camera input on the `y` axis should be flipped | `0` or `1` | `0`|
 | `rotated`       | `number` | Specifies if the camera input should be rotated | `0` or `1` | `0`|
 
-#### List of additional query string parameters:
+#### Additional query string parameters:
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
@@ -173,6 +173,9 @@ The communication is done using the postMessage API for sending messages to the 
 
 The preferred method is simple and quick browser-based integration, but we may also provide an SDK for native integration of the Footwear AR Try-On into iOS and Android apps. [Ask us](#contact) for more details.
 
+
+
+
 ## Footwear: Scan and Fit
 
 Our mobile app for iOS and Android allows users to scan their feet using just a smartphone camera. It provides precise foot measurements and personalized shoe size recommendations.
@@ -185,6 +188,9 @@ Our mobile app for iOS and Android allows users to scan their feet using just a 
 - The converter is available at: [https://dev.wearfits.com/upload](https://dev.wearfits.com/upload)
 - Anonymous service is limited and may be disabled at times. Files are deleted periodically.
 - [Contact us](#contact) for more details.
+
+
+
 
 ## Apparel: 3D Virtual Try-On and Size Fitting
 
@@ -250,7 +256,7 @@ Examples:
 	</script>
 	```
 
-#### List of JavaScript Parameters
+#### JavaScript Parameters
 
 | Parameter | Type | Description | Accepted Values | Default Value |
 | --- | --- | --- | --- | --- |
@@ -382,7 +388,7 @@ Use one of the following endpoints in the IFRAME source:
 	<iframe src="https://dev.wearfits.com/render3/<id>?lang=en&size=M"></iframe>
 	```
 
-#### List of Query String Parameters
+#### Query String Parameters
 
 | Parameter         | Type     | Description                                                   | Accepted Values                     | Default Value                       |
 |-------------------|----------|---------------------------------------------------------------|-------------------------------------|-------------------------------------|
@@ -407,6 +413,122 @@ Use one of the following endpoints in the IFRAME source:
 Example URL: `https://dev.wearfits.com/render3/Burda3?preset=wariant2&nocolorlist=0&lang=en&size=40`
 
 
+
+
+
+## Apparel: Size Recommendation and Heatmap
+
+The Size Recommendation and Heatmap feature provides accurate size recommendations and visualizes fit areas using a comfort heatmap. This solution doesn't require 3D models - only product measurements.
+
+Examples:
+
+- **GitHub:** [examples/16-wearfits-size-fitting-recommendation-demo.html](examples/16-wearfits-size-fitting-recommendation-demo.html)
+- **CodePen:** [https://codepen.io/wearfits/pen/MWNMZRO](https://codepen.io/wearfits/pen/MWNMZRO)
+
+### JavsScript API
+
+1. Import required files:
+```html
+<script src="https://dev.wearfits.com/static/js/wearfits.fr.bundle.min.js"></script>
+<script src="https://dev.wearfits.com/static/js/virtual_advisor.js"></script>
+```
+
+2. Define garment data with measurements:
+```javascript
+const demo_garment = {
+    name: "DEMO GARMENT",
+    product_type: "DRESS", // See supported types below
+    gender: "w",  // "m" for men, "w" for women
+    sizes: [{
+        name: "XS",
+        chest: 90,
+        waist: 70,
+        buttock: 94,
+        length: 95
+    }, {
+        name: "S", 
+        chest: 96,
+        waist: 76,
+        buttock: 100,
+        length: 96
+    }]
+    // ... more sizes
+};
+```
+
+3. Implement custom fit calculation (optional):
+```javascript
+async function customFitFunc() {
+    const properties = wearfits.garmentProp[wearfits.current_garment_name];
+    const selectedSize = wearfits.current_garment_size;
+    const measurements = properties.custom.measurement[selectedSize];
+
+    // Calculate fit for key measurements
+    ['chest', 'waist', 'buttock'].forEach(prop => {
+        if (measurements[prop]) {
+            const diff = measurements[prop] - wearfits.userParams[prop];
+            
+            // Determine fit category
+            let fitText;
+            if (Math.abs(diff) <= 2) {
+                fitText = "FIT";
+            } else if (diff > 2) {
+                fitText = "LOOSE";
+            } else {
+                fitText = "TIGHT";
+            }
+
+            // Override display text and difference values
+            wearfits.measurements[prop].override_text = fitText + " (" + measurements[prop] + " cm)";
+            wearfits.measurements[prop].override_diff = diff;
+        }
+    });
+}
+```
+
+#### Supported Product Types
+
+Each product type supports different measurement areas:
+
+| Product Type | Supported Measurements |
+|-------------|----------------------|
+| `"TROUSERS"` | waist, buttock, product_length |
+| `"DRESS"` | chest, waist, buttock, upperarm, product_length |
+| `"BERMUDA"` | waist, buttock, product_length |
+| `"LEGGINGS"` | waist, buttock, product_length |
+| `"SKIRT"` | waist, buttock, product_length |
+| `"TOPS AND OTHERS"` | chest, product_length, shoulders |
+| `"BLAZER"` | chest, product_length, shoulders, upperarm |
+| `"WAISTCOAT"` | chest, product_length, shoulders |
+| `"SHIRT"` | chest, product_length, shoulders, upperarm |
+| `"T-SHIRT"` | chest, product_length, shoulders |
+
+#### Methods
+
+| Method | Description | Example |
+|--------|-------------|---------|
+| Get preferred size | Retrieves the preferred size for the user | ```wearfits.getPreferedSize(); ``` |
+| Update fit data | Updates the fit data for the current garment | ```wearfits.update_fit_data(); ``` |
+| Get correct size for measurements | Gets the correct size for the given measurements | ```wearfits.getCorrectSize(garment_name, size); ``` |
+
+#### Customization Options
+
+The following properties can be configured:
+
+| Property | Description | Example Value |
+|----------|-------------|---------------|
+| `wearfits_va.use_outline` | Enable/disable outline | `true` |
+| `wearfits_va.custom_fit_func` | Custom fit calculation | `customFitFunc` |
+| `wearfits_va.default_mode_ratio` | Default mode ratio | `1.5` |
+| `wearfits_va.text_mode` | Enable/disable text mode | `false` |
+
+For styling the fit information text:
+```css
+.wearfits-fit-info-text {
+    font-size: 12px;
+    /* Add custom styles */
+}
+```
 
 
 
@@ -440,7 +562,7 @@ A demo is available at: [https://dev.wearfits.com/demo-footwear](https://dev.wea
 - [Login](https://dev.wearfits.com/account/login) to keep your models private. Anonymous uploads are public and are periodically deleted.
 - [Contact us](#contact) for an account and API integration.
 
-#### List of Endpoints
+#### Endpoints
 
 | Endpoint | Description |
 |----------|-------------|
@@ -503,7 +625,7 @@ Use the `/viewer` endpoint in the IFRAME source:
 <iframe style="width:100%;height:100%" src="https://dev.wearfits.com/viewer?object=<id>&<other_parameters>"></iframe>
 ```
 
-#### List of Query String Parameters
+#### Query String Parameters
 
 | Parameter         | Type     | Description                                                   | Accepted Values                     | Default Value                       |
 |-------------------|----------|---------------------------------------------------------------|-------------------------------------|-------------------------------------|

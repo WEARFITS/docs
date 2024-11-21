@@ -99,6 +99,14 @@ Demonstrates communication between parent and iframe containing a WEARFITS viewe
 
 Ask us for a demo.
 
+### 16. Advanced Apparel Try-On and Size Fitting Demo
+
+**Filename:** `16-wearfits-size-fitting-recommendation-demo.html`
+
+**CodePen:** [https://codepen.io/wearfits/pen/MWNMZRO](https://codepen.io/wearfits/pen/MWNMZRO)
+
+Demonstrates size recommendations with fitting visualizations displayed as a heatmap on the user’s silhouette.
+
 ---
 
 *If you find some bugs or have any suggestions, please do not hesitate to [contact us](../README.md#contact).*
