@@ -1,8 +1,8 @@
+*Go back to the [main README](../README.md).*
+
 # WEARFITS® Examples
 
 Welcome to the **WEARFITS Examples** repository! This collection showcases various implementations of the WEARFITS service, demonstrating its capabilities in creating interactive 3D/AR fitting rooms, size fitting and customization features.
-
-*Go back to the [main README](../README.md).*
 
 ### 1. Basic Virtual Fitting Room Demo
 
@@ -106,6 +106,8 @@ Ask us for a demo.
 **CodePen:** [https://codepen.io/wearfits/pen/MWNMZRO](https://codepen.io/wearfits/pen/MWNMZRO)
 
 Demonstrates size recommendations with fitting visualizations displayed as a heatmap on the user’s silhouette.
+
+*Go back to the [main README](../README.md).*
 
 ---
 
