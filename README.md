@@ -21,10 +21,9 @@
 
 
 
+## Third-Party Notices
 
-
-
-
+Information about [licenses and notices](THIRD_PARTY_NOTICES.md) for open source software used in this product.
 
 ## Contact
 
