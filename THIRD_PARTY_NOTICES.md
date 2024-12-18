@@ -12,29 +12,41 @@ This software uses third-party libraries which may be distributed under licenses
 
 The following components are licensed under the MIT License:
 
-- archiver (v5.3.0)
-- bcrypt (v5.0.0)
-- body-parser (v1.19.0)
-- canvas (v2.11.2)
-- compression (v1.7.4)
-- concat (v1.0.3)
-- cookie-parser (v1.4.6)
-- cookie-session (v1.4.0)
-- express (v4.17.1)
-- express-async-errors (v3.1.1)
-- express-minify (v1.0.0)
-- express-session (v1.16.2)
-- form-data (v2.3.3)
-- fs-extra (v9.1.0)
-- heic-convert (v1.2.4)
-- image-size (v1.1.1)
-- md5-file (v5.0.0)
-- multer (v1.4.5-lts.1)
-- serve-index (v1.9.1)
-- socket.io (v4.4.0)
-- tar-stream (v2.2.0)
-- unzip (v0.1.11)
-- vblob (v1.0.2)
+- archiver
+- bcrypt
+- body-parser
+- Bootstrap
+- canvas
+- compression
+- concat
+- cookie-parser
+- cookie-session
+- express
+- express-async-errors
+- express-minify
+- express-session
+- fflate
+- form-data
+- fs-extra
+- heic-convert
+- image-size
+- Inflate
+- jQuery
+- JSZip
+- lazysizes
+- md5-file
+- multer
+- Node.js (runtime and built-in modules: fs, https, net)
+- ONNX Runtime
+- Pako
+- QRCode.js
+- serve-index
+- socket.io
+- Swiper
+- tar-stream
+- Three.js
+- unzip
+- vblob
 
 MIT License Text:
 ```
@@ -61,12 +73,14 @@ SOFTWARE.
 
 The following components are licensed under the Apache License, Version 2.0:
 
-- @google-cloud/storage (v7.0.1)
-- draco3dgltf (v1.5.5)
-- ejs (v3.1.6)
-- gaxios (v6.1.0)
-- request (v2.88.0)
-- sharp (v0.33.4)
+- @google-cloud/storage
+- draco3dgltf
+- ejs
+- gaxios
+- MediaPipe (including Blazepose and Hand tracking)
+- request
+- sharp
+- TensorFlow.js
 
 Apache License 2.0 Summary:
 ```
@@ -86,7 +100,10 @@ limitations under the License.
 ### BSD Licensed Libraries
 
 #### BSD-3-Clause
-- md5 (v2.2.1)
+- CamanJS (image manipulation)
+- CryptoJS (MD5)
+- md5
+- OpenCV.js
 
 BSD 3-Clause License Text:
 ```
@@ -104,7 +121,7 @@ modification, are permitted provided that the following conditions are met:
 ```
 
 #### BSD-2-Clause
-- terser (v5.36.0)
+- terser
 
 BSD 2-Clause License Text:
 ```
@@ -122,9 +139,9 @@ modification, are permitted provided that the following conditions are met:
 
 The following components are licensed under the ISC License:
 
-- node-cron (v3.0.0)
-- tar (v6.2.0)
-- write-file-atomic (v3.0.3)
+- node-cron
+- tar
+- write-file-atomic
 
 ISC License Text:
 ```
@@ -141,19 +158,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-### Node.js Built-in Modules
-
-The following are built-in Node.js modules and are covered by the Node.js license:
-
-- fs
-- https
-- net
-
 ## Additional Notes
 
 1. This product includes software developed by various organizations and individuals.
 2. All licenses listed above are compatible with commercial use.
-3. Some packages may have dependencies with their own licenses. For complete license information, please refer to the node_modules directory of each package.
+3. Some packages may have dependencies with their own licenses.
 
 ---
 Last updated: December 2024
