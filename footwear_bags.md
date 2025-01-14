@@ -146,8 +146,8 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     ```json
     {
         "name": "set_option",
-        "key": <config_key>,
-        "value": <config_value>,
+        "key": "<config_key>",
+        "value": "<config_value>",
     }
     ```
 
