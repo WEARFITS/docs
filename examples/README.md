@@ -85,7 +85,9 @@ Demonstrates moving and resizing iframes containing WEARFITS viewers within cont
 
 **Filename:** `13-wearfits-apparel-and-size-fitting-demo.html`
 
-Provides advanced customization features, allowing detailed modifications to garment geometry and appearance.
+**CodePen:** [https://codepen.io/wearfits/pen/pvzVVBo](https://codepen.io/wearfits/pen/pvzVVBo)
+
+Provides advanced customization features, allowing detailed modifications to garment geometry and appearance, with mix-and-match functionality that allows trying on different tops with different bottoms.
 
 ### 14. Digital Mirror - IFRAME Communication Demo
 
