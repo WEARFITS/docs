@@ -141,6 +141,16 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     }
     ```
 
+2. Set tryon config:  
+
+    ```json
+    {
+        "name": "set_option",
+        "key": <config_key>,
+        "value": <config_value>,
+    }
+    ```
+
 **Receiving messages from the IFRAME:**
 
 1. Add an event listener for the 'message' event on the window object.
