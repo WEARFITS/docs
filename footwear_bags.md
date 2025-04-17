@@ -335,10 +335,96 @@ Use the `/viewer` endpoint in the IFRAME source:
 
 Example URL: `https://dev.wearfits.com/viewer?object=backpack&preset=red&nocolorlist=1&autorotate=1`
 
-*Go back to the [main README](README.md).*
+
+### Shoe Upload and Processing API
+
+Our system provides endpoints for uploading and processing 3D shoe models, with automatic positioning for AR try-on.
+
+#### Upload Shoe API
+
+**Endpoint:** `POST /tryon/api/upload_shoe`
+
+This endpoint allows for uploading a 3D shoe model (.glb file) which will be automatically processed for AR try-on.
+
+**Request:**
+- Content-Type: `multipart/form-data`
+- Authentication required: Yes (Bearer token in Authorization header)
+- Example: `Authorization: Bearer your_api_token_here`
+#### Authentication
+
+To use the API, you need to obtain an API token:
+
+1. Get your user token
+   - Go to https://dev.wearfits.com/account
+   - Copy user token or click "Generate new token" button to create one
+   - Use this token in the Authorization header for API requests
+
+**Parameters:**
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `file` | File (.glb) | Yes | The 3D model file (max 30MB) |
+| `right_shoe` | Boolean | No | Specifies if this is a right shoe model (default: false) |
+
+**Response:**
+```json
+{
+  "id": "model_id",
+  "color_id": "default_color_id",
+  "viewer_url": "https://example.com/viewer?object=model_id"
+}
+```
+
+**Error Codes:**
+| Status | Error | Description |
+|--------|-------|-------------|
+| 400 | no_file | No file was provided in the request |
+| 400 | unauthorized | User authentication is required |
+| 400 | file_too_large | File exceeds the 30MB size limit |
+| 400 | other errors | Other unspecified errors |
+
+#### Check Autofit Status API
+
+**Endpoint:** `GET /tryon/api/autofit_status`
+
+This endpoint allows you to check the automatic positioning status of an uploaded shoe model.
+
+**Parameters:**
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `id` | String | Yes | The model ID returned from the upload API |
+
+**Response:**
+```json
+{
+  "status": "in_progress",
+  "progress": 45
+}
+```
+
+**Status Values:**
+- `in_queue` - Model is waiting to be processed
+- `in_progress` - Model is currently being processed
+- `finished` - Processing completed successfully
+- `failed` - Processing failed
+- `interrupted` - Processing was interrupted. User modified object while autofitting service was running
+- `undefined` - Status is unknown
+
+**Progress Values:**
+- Range from 0 to 100, indicating the percentage of completion
+
+**Error Codes:**
+| Status | Error | Description |
+|--------|-------|-------------|
+| 400 | no_id | No model ID was provided |
+| 400 | object_not_found | The specified model ID was not found |
+
+*💡 After uploading a shoe model, you should poll the autofit status endpoint until status is "finished" before using the model in AR try-on.*
 
 ## Contact
 
 **For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
 
 © 2024 [WEARFITS](https://wearfits.com). All rights reserved.
+
+
+*Go back to the [main README](README.md).*
