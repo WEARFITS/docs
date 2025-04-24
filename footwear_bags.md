@@ -392,22 +392,25 @@ This endpoint allows you to check the automatic positioning status of an uploade
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `id` | String | Yes | The model ID returned from the upload API |
+| `color_id` | String | No | The color ID of the model variant |
 
 **Response:**
 ```json
 {
   "status": "in_progress",
-  "progress": 45
+  "progress": 45,
+  "glb_url": null
 }
 ```
 
 **Status Values:**
 - `in_queue` - Model is waiting to be processed
-- `in_progress` - Model is currently being processed
+- `in_progress` - Model is currently being processed (with progress percentage)
+- `exporting` - Model has been processed and is being exported to GLB format
 - `finished` - Processing completed successfully
 - `failed` - Processing failed
-- `interrupted` - Processing was interrupted. User modified object while autofitting service was running
-- `undefined` - Status is unknown
+- `interrupted` - Processing was interrupted (user modified object while processing)
+- `undefined` - Status is unknown or not yet determined
 
 **Progress Values:**
 - Range from 0 to 100, indicating the percentage of completion
