@@ -65,7 +65,6 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 | `banner_url` | `string` | Banner URL | Valid URL | `null` |
 | `banner_icon` | `number` | Banner icon | `0` or `1` | `null` |
 | `set_crop_region_from_pose` | `number` | Sets crop region from pose | `0` or `1` | `1` |
-| `display_objects_after` | `number` | Delay for displaying objects after foot detection | Non-negative integer | `0` |
 | `hide_one` | `number` | Hides shoes if only one foot is detected | `0` or `1` | `0` |
 | `loop` | `number` | Loops animation | `0` or `1` | `0` |
 | `noloader` | `number` | Hides loader | `0` or `1` | `0` |
@@ -82,7 +81,6 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
-| `handbag` | `number` | Enables handbag mode | `0` or `1` | `0` |
 | `user_height` | `number` | User height for accurate bag/backpack size calibration | e.g. `165` | `null` |
 
 
@@ -331,7 +329,6 @@ Use the `/viewer` endpoint in the IFRAME source:
 | `nofullscreen`    | `number` | Disables the fullscreen mode when set to `1`                  | `0` or `1`                          | `0`                                 |
 | `autorotate`      | `number` | Enables automatic rotation when set to `1`                    | `0` or `1`                          | `0`                                 |
 | `hidesettings`    | `number` | Hides the settings panel when set to `1`                      | `0` or `1`                          | `0`                                 |
-| `arscale`         | `number` | Sets the initial scale of the object in AR mode               | Any positive number                 | `1`                                 |
 
 Example URL: `https://dev.wearfits.com/viewer?object=backpack&preset=red&nocolorlist=1&autorotate=1`
 
@@ -427,7 +424,7 @@ This endpoint allows you to check the automatic positioning status of an uploade
 
 **For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
 
-© 2024 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2025 [WEARFITS](https://wearfits.com). All rights reserved.
 
 
 *Go back to the [main README](README.md).*

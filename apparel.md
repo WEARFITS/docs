@@ -75,7 +75,7 @@ Examples:
 | `showSizeSelectionUI` | `boolean` | Show or hide size selection UI | `true`, `false` | `true` |
 | `showAvatarSelectionUI` | `boolean` | Show or hide avatar selection UI | `true`, `false` | `true` |
 | `showComfortMapButton` | `boolean` | Show or hide comfort map button | `true`, `false` | `true` |
-| `controlsType` | `string` | Type of controls to use | `MOUSE_POSITION`, `TOUCH_POSITION` | `MOUSE_POSITION` |
+| `controlsType` | `string` | Type of controls to use | `MOUSE_POSITION` | `MOUSE_POSITION` |
 
 #### Multiple Instances of Viewers
 
@@ -122,7 +122,7 @@ wearfits.loadByHashAndId("51a2dc298a9ed146e1d6844b6558468e", ["Burda8_38", "Szor
 To get the preferred size, use this function:
 
 ```javascript
-wearfits.getPreferredSize();
+wearfits.getPreferedSize();
 ```
 
 or:
@@ -132,6 +132,7 @@ wearfits.fetchGarmentMetadata(user_measurements, garment_name, garment_color);
 ```
 
 It returns:
+This function communicates asynchronously by posting a message to the parent window with the following structure:
 ```json
 {
     "name": "fetchGarmentMetadata",
@@ -158,7 +159,7 @@ To dynamically update the avatar and/or garment, use the following function:
 wearfits.updateAvatarAndGarment(user_measurements, garment_name, garment_size, garment_color);
 ```
 
-It returns:
+This function communicates asynchronously by posting a message to the parent window with the following structure:
 ```json
 {
     "name": "updateAvatarAndGarment",
@@ -208,7 +209,7 @@ Use one of the following endpoints in the IFRAME source:
 | `noavatarselection`| `number`    | Disables the avatar selection when set to `1`               | `0` or `1`                          | `0`                                 |
 | `nocomfortbutton` | `number`    | Hides the comfort (heatmap) button when set to `1`                    | `0` or `1`                          | `0`                                 |
 | `norenderbutton`  | `number` | Hides the HQ render button when set to `1`                     | `0` or `1`                          | `0`                                 |
-| `controlstype`    | `string` | Specifies the type of controls for the viewer               | `mouse`, `touch`					  | `mouse`                             |
+| `controlstype`    | `string` | Specifies the type of controls for the viewer               | `mouse`					  | `mouse`                             |
 | `background`       | `string` | Sets the background color of the viewer                      | Hex color code (e.g., `ffffff` for white) | `ffffff`                            |
 | `nopan`            | `number` | Disables panning (two-finger object move) when set to `1`  | `0` or `1`                          | `0`                                 |
 | `nofittext`        | `number` | Disables fit info text when set to `1`                           | `0` or `1`                          | `0`                                 |
@@ -359,4 +360,4 @@ Augmented Reality allows users to visualize garments on themselves in real-time.
 
 **For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
 
-© 2024 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2025 [WEARFITS](https://wearfits.com). All rights reserved.

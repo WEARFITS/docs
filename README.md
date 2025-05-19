@@ -29,4 +29,4 @@ Information about [licenses and notices](THIRD_PARTY_NOTICES.md) for open source
 
 **For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
 
-© 2024 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2025 [WEARFITS](https://wearfits.com). All rights reserved.

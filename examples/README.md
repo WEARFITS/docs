@@ -115,4 +115,4 @@ Demonstrates size recommendations with fitting visualizations displayed as a hea
 
 *If you find some bugs or have any suggestions, please do not hesitate to [contact us](../README.md#contact).*
 
-© 2024 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2025 [WEARFITS](https://wearfits.com). All rights reserved.
