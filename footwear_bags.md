@@ -34,56 +34,72 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
-| `object` (required) | `string` | Specifies the object ID or URL to the 3D model (`.glb`)                                | Any valid URL or object ID | `null`|
+| `object` (required) | `string` | Specifies the object ID or URL to the 3D model (`.glb`) - it can be set also via `postMessage` ℹ️ Use `object=null` when loading object via postMessage `load_object` | Any valid URL or object ID | `null`|
 | `color`         | `string` | Colorset ID of the object | Any valid color name | `null` |
-| `pose`          | `number` | Required for try-on of bags, backpacks, and garments   | `0` or `1` | `0`|
-| `mm`            | `number` | Enables the Mirror Mode with chosen quality  | `1` (lowest), `2` (use pose model), or `3` (use pose and mask) | `0` (not Mirror Mode) |
 | `res`           | `string` | Specifies the resolution of the camera input. Can be one of: `vga`, `hd`, `fhd`, `qhd`, `uhd`, `4k`, or a custom resolution like `1920x1200` | Any valid resolution string | `fhd`|
+
+#### Additional query string parameters:
+
+##### Mirror Mode (mm>0)
+
+| Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
+|------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
+| `mm`            | `number` | Enables the Mirror Mode with chosen quality (use for digital screens only, not for mobile devices!) | `1` (basic mirror mode), `2` (hand detection, no masks), `3` (variant of 5), `4` (masking, no hands), `5` (hand & masking), `6` (masking beta, no hands yet) | `0` (not Mirror Mode) |
 | `camera_id`     | `string` | Specifies the camera device ID | `"string"` | `null`|
 | `flip_x`        | `number` | Specifies if the camera input on the `x` axis should be flipped | `0` or `1` | `0`|
 | `flip_y`        | `number` | Specifies if the camera input on the `y` axis should be flipped | `0` or `1` | `0`|
 | `rotated`       | `number` | Specifies if the camera input should be rotated | `0` or `1` | `0`|
 
-#### Additional query string parameters:
+##### Bags & Backpacks
+
+| Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
+|------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
+| `pose`          | `number` | Enables try-on of bags, backpacks, and garments (do not use for shoes)  | `0` or `1` | `0`|
+| `calibration_data` | `string` | Calibration data (base64 encoded), used for bags (pose=1) | Valid base64 string | `null` |
+| `user_height` | `number` | User height (cm) for accurate bag/backpack size calibration - it can be set also via `postMessage` | e.g. `165` | `null` |
+| `no_height_selector_ui` | `number` | Disables Wearfits height selector UI (it still displays camera output but no heavy processing is done till user height is provided) | `0` or `1` | `0` |
+
+
+##### UI
+
+| Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
+|------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
+| `banner_text` | `string` | Banner text | Any string | `null` |
+| `banner_url` | `string` | Banner URL | Valid URL | `null` |
+| `banner_icon` | `number` | Banner icon | `0` or `1` | `null` |
+| `colorlist` | `number` | Shows color list | `0` or `1` | `0` |
+| `loop` | `number` | Loops animation (used by animated objects) | `0` or `1` | `0` |
+| `no_ui` | `number` | Hides all UI elements (set when using custom interface and `postMessage` communication) | `0` or `1` | `0` |
+| `noloader` | `number` | Hides loader | `0` or `1` | `0` |
+| `show_snapshot_button` | `number` | Shows snapshot button | `0` or `1` | `0` |
+| `show_back_button` | `number` | Shows back button | `0` or `1` | `0` |
+| `sound` | `string` | URL of sound to play | Valid URL | `null` |
+
+##### Development & Debug
 
 | Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
 |------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
 | `quality`        | `string` | Sets the rendering quality                                      | `low`, `medium`, `high`, `auto` | `auto` |
+| `pose_quality`   | `number` | Sets pose detection quality (use with pose=1)       | `1` (low), `2` (med), `3` (high - do not use on mobile devices) | `2` |
 | `ml_model_url`   | `string` | URL to the ML model in JSON format                       | Any valid URL or `small`, `medium`| `null`|
 | `tf_backend`     | `string` | Forces the AI backend to use                                     | `webgpu`*, `wasm`, or `webgl`| `null` (auto selected)|
 | `nocamera` | `number` | Disables camera and uses video as input | `0` or `1` | `0` |
-| `debug_video_clip` | `string` | Debug video clip used with nocamera parameter | Valid URL | `null` |
+| `debug_video_clip` | `string` | Debug video clip (used with nocamera=1) | Valid URL | `null` |
 | `native_ml_version` | `string` | Native ML version to use | Valid version string | `null` |
 | `object_scale` | `number` | Object scale | Any positive float | `1.0` |
 | `object_collection_id` | `string` | Group ID used in demo. Allows user to change shoes within the group by swiping left or right. Group of models is defined by admin   | `null` |
 | `object_carousel_interval` | `number` | Used with object_collection_id, automatic shoe rotation time in seconds | Positive integer | `null` |
 | `fps` | `number` | FPS limit | Positive integer | `null` |
 | `zoom` | `number` | Camera zoom | Positive integer | `100` |
-| `show_snapshot_button` | `number` | Shows snapshot button | `0` or `1` | `0` |
-| `show_back_button` | `number` | Shows back button | `0` or `1` | `0` |
-| `banner_text` | `string` | Banner text | Any string | `null` |
-| `banner_url` | `string` | Banner URL | Valid URL | `null` |
-| `banner_icon` | `number` | Banner icon | `0` or `1` | `null` |
 | `set_crop_region_from_pose` | `number` | Sets crop region from pose | `0` or `1` | `1` |
 | `hide_one` | `number` | Hides shoes if only one foot is detected | `0` or `1` | `0` |
-| `loop` | `number` | Loops animation | `0` or `1` | `0` |
-| `noloader` | `number` | Hides loader | `0` or `1` | `0` |
-| `sound` | `string` | URL of sound to play | Valid URL | `null` |
-| `colorlist` | `number` | Shows color list | `0` or `1` | `0` |
 | `compose_method` | `string` | Composition method; changing may increase performance | `"canvas"`, `"scene"`, or `"shader"` | `"canvas"` (auto selected) |
-| `calibration_data` | `string` | Calibration data (base64 encoded) | Valid base64 string | `null` |
+| `masks` | `number` | Controls masking behavior (used for shoes): 0 (disable masks), 1 (automatic use masks on supported devices), 2 (force masks enabled on all devices) | `0`, `1`, or `2` | `1` |
+| `device_info` | `number` | Displays device information, fps and resolution used | `0` or `1` | `0` |
+| `settings` | `number` | Displays settings window (use for development only) | `0` or `1` | `0` |
+| `masking_model_url` | `string` | Path to JSON to select different segmentation model for shoe masking | Any valid URL | `null` |
 
-*💡 `webgpu` mode offers the best performance but is not supported on all devices yet (iOS requires enabling WebGPU manually in Safari settings).*
-
-
-
-#### Additional query string parameters for bags and backpacks try-on:
-
-| Parameter        | Type     | Description                                                              | Accepted Values| Default Value|
-|------------------|----------|---------------------------------------------------------|-------------------------------|------------------------|
-| `user_height` | `number` | User height for accurate bag/backpack size calibration | e.g. `165` | `null` |
-
-
+*💡 `webgpu` mode offers the best performance but is not supported on all devices yet (iOS is supported from iOS 26).*
 
 ### Digital Mirror - Communicating with the Viewer via IFRAME
 
@@ -130,6 +146,8 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     }
     ```
 
+    ℹ️ Add to IFRAME URL param `&object=null` when loading object via postMessage `load_object`
+
 2. Enable/disable camera (can be `0` or `1`):  
 
     ```json
@@ -139,13 +157,23 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     }
     ```
 
-2. Set tryon config:  
+3. Set tryon config:  
 
     ```json
     {
         "name": "set_option",
         "key": "<config_key>",
-        "value": "<config_value>",
+        "value": "<config_value>"
+    }
+    ```
+
+    For example, to set the user's height:
+    
+    ```javascript
+    const message = {
+        name: "set_option",
+        key: "user_height",
+        value: <value>,
     }
     ```
 
@@ -165,6 +193,9 @@ Communication between the web app and the digital mirror in an IFRAME is done us
 | `objectLoadingProgressHandler`    | Triggered during object loading                                                                | Object loading progress percentage (`int`) |
 | `objectLoadingFinishedHandler`    | Triggered when the object finishes loading                                                         | An object; error field is missing if the object is loaded successfully `{ id: string, error: int }` |
 | `shoesVisibilityChangedHandler`   | Triggered when feet visibility changes                                                     | A `boolean` indicating visibility   |
+| `objectVisibilityChangedHandler`  | Triggered when object visibility changes (true when positioned and displayed/anchored)    | A `boolean` indicating visibility   |
+| `heightSelectorVisibilityChangedHandler` | Triggered when height selector UI visibility changes                               | A `boolean` indicating visibility   |
+| `userHeightSelectedHandler`       | Triggered when user selects height in height selector UI                        | Height in cm (`int`) |
 | `detectorStateChanged` | Triggered when left or right hand enters or leaves the detection area | `data: { index: <0 - left detector, 1 right detector>, value: <true or false> }` |
 | `calibrationParameter` | Triggered when `Save` button, after bag size calibration, is pushed | `{ name: "calibrationParameter", data: "&calibration_data=<...>" }` |
 
@@ -254,7 +285,7 @@ A demo is available at: [https://dev.wearfits.com/demo-footwear](https://dev.wea
 - [Login](https://dev.wearfits.com/account/login) to keep your models private. Anonymous uploads are public and are periodically deleted.
 - [Contact us](#contact) for an account and API integration.
 
-#### Endpoints
+#### Web App Endpoints
 
 | Endpoint | Description |
 |----------|-------------|
@@ -333,7 +364,7 @@ Use the `/viewer` endpoint in the IFRAME source:
 Example URL: `https://dev.wearfits.com/viewer?object=backpack&preset=red&nocolorlist=1&autorotate=1`
 
 
-### Shoe Upload and Processing API
+### Shoe Upload and Processing REST API
 
 Our system provides endpoints for uploading and processing 3D shoe models, with automatic positioning for AR try-on.
 
