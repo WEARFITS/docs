@@ -175,6 +175,8 @@ Communication between the web app and the digital mirror in an IFRAME is done us
         key: "user_height",
         value: <value>,
     }
+    
+    postMessage(JSON.stringify(message), "*”);
     ```
 
 **Receiving messages from the IFRAME:**
