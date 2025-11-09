@@ -101,9 +101,21 @@ Scan the AR code below or click this link on your mobile device: [https://dev.we
 
 *💡 `webgpu` mode offers the best performance but is not supported on all devices yet (iOS is supported from iOS 26).*
 
-### Digital Mirror - Communicating with the Viewer via IFRAME
+### IFRAME
 
-Examples:
+Below, we explain how to communicate with the try-on app implemented via an IFRAME using postMessage.
+The IFRAME integration can be used in two main scenarios:
+
+1. **Embedding Try-On in Custom Web Apps:**  
+   Wrapping the WEARFITS try-on app inside an IFRAME lets you build your own custom UX, interface, or control elements around the core try-on experience. This approach is suitable when you want to apply your web app's styles, add unique flows, or interact with the IFRAME using the `postMessage` API for advanced controls (see below for message examples).
+
+2. **Digital Mirror Installations:**  
+   The IFRAME can also be used to embed the try-on app in digital mirror settings, such as a large screen with a connected camera in a brick-and-mortar retail space or digital signage environments. In this case, the app runs either in a browser or kiosk mode and provides a real-time virtual try-on experience to shoppers.  
+   For digital mirror mode, ensure you add the `mm` parameter to the IFRAME URL (see documentation above) to enable features specifically designed for these environments, such as simplified user flow and on-screen mirror calibration.
+
+This flexibility allows you to create both rich, branded try-on web integrations and robust in-store digital mirror experiences with the same WEARFITS try-on platform.
+
+**Digital Mirror Examples:**
 
 - **CodePen:** [https://codepen.io/wearfits/pen/poMjQOz](https://codepen.io/wearfits/pen/poMjQOz)
 - **GitHub:** [examples/14-wearfits-digital-mirror-communication.html](examples/14-wearfits-digital-mirror-communication.html)
@@ -146,9 +158,14 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     }
     ```
 
-    ℹ️ Add to IFRAME URL param `&object=null` when loading object via postMessage `load_object`
+    - Add to IFRAME URL param `&object=null` when loading object via postMessage `load_object`
+    - You can combine the object ID and color name using the format `<id>~<color>` to load an object in a specific color with a single message (e.g., `"12345678~red"`).
 
-2. Enable/disable camera (can be `0` or `1`):  
+2. Change color:
+
+    To change the color, use the `load_object` message as described above, and specify the desired color name together with the object ID in the format `<id>~<color>`.
+
+3. Enable/disable camera (can be `0` or `1`):  
 
     ```json
     {
@@ -157,7 +174,7 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     }
     ```
 
-3. Set tryon config:  
+4. Set tryon config:  
 
     ```json
     {
@@ -177,6 +194,31 @@ Communication between the web app and the digital mirror in an IFRAME is done us
     }
     
     postMessage(JSON.stringify(message), "*”);
+    ```
+
+    Hand detection area configuration:
+
+    ```javascript
+    const message = {
+        name: "set_option",
+        key: "detector_positions",
+        value: [
+            {
+                left: "1vw",
+                top: "49vh",
+                width: "7vh",
+                height: "7vh",
+            },
+            {
+                right: "2.5vw",
+                top: "49vh",
+                width: "7vh",
+                height: "7vh",
+            },
+        ],
+    }
+
+    tryon_iframe_element.postMessage(JSON.stringify(message), "*")
     ```
 
 **Receiving messages from the IFRAME:**
@@ -200,31 +242,6 @@ Communication between the web app and the digital mirror in an IFRAME is done us
 | `userHeightSelectedHandler`       | Triggered when user selects height in height selector UI                        | Height in cm (`int`) |
 | `detectorStateChanged` | Triggered when left or right hand enters or leaves the detection area | `data: { index: <0 - left detector, 1 right detector>, value: <true or false> }` |
 | `calibrationParameter` | Triggered when `Save` button, after bag size calibration, is pushed | `{ name: "calibrationParameter", data: "&calibration_data=<...>" }` |
-
-**Hand detection area configuration:**
-
-```javascript
-const message = {
-    name: "set_option",
-    key: "detector_positions",
-    value: [
-        {
-            left: "1vw",
-            top: "49vh",
-            width: "7vh",
-            height: "7vh",
-        },
-        {
-            right: "2.5vw",
-            top: "49vh",
-            width: "7vh",
-            height: "7vh",
-        },
-    ],
-}
-
-tryon_iframe_element.postMessage(JSON.stringify(message), "*")
-```
 
 #### Error codes:
 
