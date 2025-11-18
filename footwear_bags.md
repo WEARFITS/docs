@@ -99,6 +99,7 @@ Scan the AR code below or click this link on your mobile device: [https://wearfi
 | `device_info` | `number` | Displays device information, fps and resolution used | `0` or `1` | `0` |
 | `settings` | `number` | Displays settings window (use for development only) | `0` or `1` | `0` |
 | `masking_model_url` | `string` | Path to JSON to select different segmentation model for shoe masking | Any valid URL | `null` |
+| `iframe_mode` | `number` | Use for URL in IFRAME implementation. It does not enable the camera (it is not computing) and does not load the default product. Use `enable_camera` via postMessage to start and stop the camera. | `0` or `1` | `0` |
 
 *💡 `webgpu` mode offers the best performance but is not supported on all devices yet (iOS is supported from iOS 26).*
 
