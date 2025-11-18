@@ -5,12 +5,13 @@
 The AR Try-On feature allows users to virtually try on shoes, bags, and backpacks in real-time using their mobile device's camera. It can be accessed via a direct link or by scanning a QR code.
 
 <img src="img/wearfits_shoes_ar.webp">
+<img src="img/wearfits_bags_ar.webp">
 
 ### Demo
 
-Scan the AR code below or click this link on your mobile device: [https://dev.wearfits.com/tryon](https://dev.wearfits.com/tryon)
+Scan the AR code below or click this link on your mobile device: [https://wearfits.com/demo-tryon](https://wearfits.com/demo-tryon)
 
-![WEARFITS](img/wearfits_shoes_ar_qr.png)
+![WEARFITS](https://wearfits.com/demo-qr-shoes.png)
 
 ### API
 
@@ -278,7 +279,7 @@ Our mobile app for iOS and Android allows users to scan their feet using just a 
 ## Footwear and Bags: 2D-to-3D Converter
 
 - Our web tool allows for the automatic conversion of 2D images to 3D models.
-- The converter is available at: [https://dev.wearfits.com/upload](https://dev.wearfits.com/upload)
+- The converter is available at: [https://dev.wearfits.com/editor](https://dev.wearfits.com/editor)
 - Anonymous service is limited and may be disabled at times. Files are deleted periodically.
 - [Contact us](#contact) for more details.
 
@@ -291,7 +292,7 @@ This feature allows users to visualize any 3D objects (including shoes, bags, fu
 
 ### Demo
 
-A demo is available at: [https://dev.wearfits.com/demo-footwear](https://dev.wearfits.com/demo-footwear)
+A demo is available at: [https://wearfits.com/demo](https://wearfits.com/demo)
 
 ### Admin Tool
 
@@ -472,7 +473,7 @@ This endpoint allows you to check the automatic positioning status of an uploade
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
+**For any questions, inquiries, or to request an account, please email us at https://wearfits.com/contact?s=support**
 
 © 2025 [WEARFITS](https://wearfits.com). All rights reserved.
 
