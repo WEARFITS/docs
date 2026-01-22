@@ -296,7 +296,7 @@ This feature allows users to visualize any 3D objects (including shoes, bags, fu
 
 ### Demo
 
-A demo is available at: [https://wearfits.com/demo](https://wearfits.com/demo)
+A demo is available at: [https://demo.wearfits.com](https://demo.wearfits.com)
 
 ### Admin Tool
 
