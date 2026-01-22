@@ -353,7 +353,7 @@ For styling the fit information text:
 ## Apparel: Generative AI Try-On
 
 Generative AI allows for photo-realistic visualization of garments on users with just one photo of a garment.
-- Demo: [http://tryon.wearfits.com](http://tryon.wearfits.com)
+- Demo: [https://tryon.wearfits.com](https://tryon.wearfits.com)
 - More information: [https://tryon.wearfits.com/docs/integration](https://tryon.wearfits.com/docs/integration)
 
 ## Apparel: AR Try-On
