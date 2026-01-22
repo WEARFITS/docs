@@ -4,6 +4,8 @@
 
 **[WEARFITS®](https://wearfits.com) is a comprehensive web application designed for virtual try-ons and size fitting. Leveraging modern web technologies like 3D, Augmented Reality (AR), Machine Learning, and Generative AI, WEARFITS® provides users with an interactive and seamless experience to visualize garments and accessories in both apparel and footwear contexts.**
 
+Our demo is available at: [https://wearfits.com/demo](https://wearfits.com/demo)
+
 ## Products
 
 ### Demo Page
@@ -37,6 +39,6 @@ Information about [licenses and notices](THIRD_PARTY_NOTICES.md) for open source
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please via [Support Form](http://wearfits.com/contact?s=support).**
+**For any questions, inquiries, or to request an account, please contact us at https://wearfits.com/contact?s=support**
 
 © 2026 [WEARFITS](https://wearfits.com). All rights reserved.

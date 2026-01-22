@@ -5,12 +5,13 @@
 The AR Try-On feature allows users to virtually try on shoes, bags, and backpacks in real-time using their mobile device's camera. It can be accessed via a direct link or by scanning a QR code.
 
 <img src="img/wearfits_shoes_ar.webp">
+<img src="img/wearfits_bags_ar.webp">
 
 ### Demo
 
-Scan the AR code below or click this link on your mobile device: [https://demo.wearfits.com](https://demo.wearfits.com)
+Scan the AR code below or click this link on your mobile device: [https://wearfits.com/demo-tryon](https://wearfits.com/demo-tryon)
 
-![WEARFITS](img/wearfits_shoes_ar_qr.png)
+![WEARFITS](https://wearfits.com/demo-qr-shoes.png)
 
 ### NEW
 
@@ -102,6 +103,7 @@ Check out our new solution for AR Shoes Try-On: [Automatic 3D Model Generation f
 | `device_info` | `number` | Displays device information, fps and resolution used | `0` or `1` | `0` |
 | `settings` | `number` | Displays settings window (use for development only) | `0` or `1` | `0` |
 | `masking_model_url` | `string` | Path to JSON to select different segmentation model for shoe masking | Any valid URL | `null` |
+| `iframe_mode` | `number` | Use for URL in IFRAME implementation. It does not enable the camera (it is not computing) and does not load the default product. Use `enable_camera` via postMessage to start and stop the camera. | `0` or `1` | `0` |
 
 *💡 `webgpu` mode offers the best performance but is not supported on all devices yet (iOS is supported from iOS 26).*
 
@@ -282,7 +284,7 @@ Our mobile app for iOS and Android allows users to scan their feet using just a 
 ## Footwear and Bags: 2D-to-3D Converter
 
 - Our web tool allows for the automatic conversion of 2D images to 3D models.
-- The converter demo is available at: [https://tryon.wearfits.com/shoes](https://tryon.wearfits.com/shoes)
+- The converter is available at: [https://dev.wearfits.com/editor](https://dev.wearfits.com/editor)
 - Anonymous service is limited and may be disabled at times. Files are deleted periodically.
 - Check this page for more information: [Documentation](https://tryon.wearfits.com/docs/integration-shoes)
 - [Contact us](#contact) for more details.
@@ -294,7 +296,7 @@ This feature allows users to visualize any 3D objects (including shoes, bags, fu
 
 ### Demo
 
-A demo is available at: [https://dev.wearfits.com/demo-footwear](https://dev.wearfits.com/demo-footwear)
+A demo is available at: [https://wearfits.com/demo](https://wearfits.com/demo)
 
 ### Admin Tool
 
@@ -475,7 +477,7 @@ This endpoint allows you to check the automatic positioning status of an uploade
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please via [Support Form](http://wearfits.com/contact?s=support).**
+**For any questions, inquiries, or to request an account, please email us at https://wearfits.com/contact?s=support**
 
 © 2026 [WEARFITS](https://wearfits.com). All rights reserved.
 

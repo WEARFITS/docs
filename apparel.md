@@ -10,7 +10,7 @@ The 3D Try-On Viewer enables users to virtually try on apparel in 3D on avatars 
 
 ### Demo
 
-A demo is available at: [https://dev.wearfits.com/demo-apparel](https://dev.wearfits.com/demo-apparel)
+A demo for 3D apparel try-on is available at: [https://dev.wearfits.com/demo-apparel](https://dev.wearfits.com/demo-apparel)
 
 ### Digitization
 
@@ -364,6 +364,6 @@ Augmented Reality allows users to visualize garments on themselves in real-time.
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please via [Support Form](http://wearfits.com/contact?s=support).**
+**For any questions, inquiries, or to request an account, please email us at https://wearfits.com/contact?s=support**
 
 © 2026 [WEARFITS](https://wearfits.com). All rights reserved.
