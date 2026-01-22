@@ -284,7 +284,7 @@ Our mobile app for iOS and Android allows users to scan their feet using just a 
 ## Footwear and Bags: 2D-to-3D Converter
 
 - Our web tool allows for the automatic conversion of 2D images to 3D models.
-- The converter is available at: [https://dev.wearfits.com/editor](https://dev.wearfits.com/editor)
+- The converter demo is available at: [https://tryon.wearfits.com/shoes](https://tryon.wearfits.com/shoes)
 - Anonymous service is limited and may be disabled at times. Files are deleted periodically.
 - Check this page for more information: [Documentation](https://tryon.wearfits.com/docs/integration-shoes)
 - [Contact us](#contact) for more details.
