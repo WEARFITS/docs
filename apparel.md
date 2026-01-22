@@ -1,5 +1,9 @@
 *Go back to the [main README](README.md).*
 
+## NEW
+
+➡️ Check out our new Generative AI Clothing and Shoes Try-On: [https://tryon.wearfits.com](https://tryon.wearfits.com)
+
 ## Apparel: 3D Virtual Try-On and Size Fitting
 
 The 3D Try-On Viewer enables users to virtually try on apparel in 3D on avatars of their size. It supports web-based and AR visualizations, providing a versatile platform for different user experiences. The built-in comfort heatmap allows for accurate size fitting.
@@ -348,7 +352,9 @@ For styling the fit information text:
 
 ## Apparel: Generative AI Try-On
 
-Generative AI allows for photo-realistic visualization of garments on users with just one photo of a garment. [Ask us](#contact) for a demo.
+Generative AI allows for photo-realistic visualization of garments on users with just one photo of a garment.
+- Demo: [http://tryon.wearfits.com](http://tryon.wearfits.com)
+- More information: [https://tryon.wearfits.com/docs/integration](https://tryon.wearfits.com/docs/integration)
 
 ## Apparel: AR Try-On
 
@@ -358,6 +364,6 @@ Augmented Reality allows users to visualize garments on themselves in real-time.
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
+**For any questions, inquiries, or to request an account, please via [Support Form](http://wearfits.com/contact?s=support).**
 
-© 2025 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2026 [WEARFITS](https://wearfits.com). All rights reserved.

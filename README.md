@@ -6,6 +6,12 @@
 
 ## Products
 
+### Demo Page
+
+Go to https://demo.wearfits.com
+
+### AR and 3D
+
 | Category                | Solution                | Description                                                                 | Implementation Requirements                                         |
 |------------------------|-----------------------|-----------------------------------------------------------------------------|-----------------------------------------------------|
 | Footwear & Bags  | **[AR Try-On](footwear_bags.md#footwear-and-bags-ar-try-on)**             | Virtual try-on in AR and Digital Mirror for footwear, bags, and backpacks | 3D model of a product (`OBJ`, `GLB`, `FBX`, etc.)            |
@@ -19,7 +25,11 @@
 
 *Check also our [examples repository](examples/README.md).*
 
+### Generative AI
 
+- [Clothing - Generative AI Try-On Demo](https://tryon.wearfits.com)
+- [Footwear - Automatic 3D Model Generation from Photos](https://tryon.wearfits.com/shoes)
+- [API Documentation](https://api.wearfits.com)
 
 ## Third-Party Notices
 
@@ -27,6 +37,6 @@ Information about [licenses and notices](THIRD_PARTY_NOTICES.md) for open source
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
+**For any questions, inquiries, or to request an account, please via [Support Form](http://wearfits.com/contact?s=support).**
 
-© 2025 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2026 [WEARFITS](https://wearfits.com). All rights reserved.

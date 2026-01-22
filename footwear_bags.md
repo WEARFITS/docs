@@ -8,9 +8,13 @@ The AR Try-On feature allows users to virtually try on shoes, bags, and backpack
 
 ### Demo
 
-Scan the AR code below or click this link on your mobile device: [https://dev.wearfits.com/tryon](https://dev.wearfits.com/tryon)
+Scan the AR code below or click this link on your mobile device: [https://demo.wearfits.com](https://demo.wearfits.com)
 
 ![WEARFITS](img/wearfits_shoes_ar_qr.png)
+
+### NEW
+
+Check out our new solution for AR Shoes Try-On: [Automatic 3D Model Generation from Photos](https://tryon.wearfits.com/shoes)
 
 ### API
 
@@ -278,11 +282,10 @@ Our mobile app for iOS and Android allows users to scan their feet using just a 
 ## Footwear and Bags: 2D-to-3D Converter
 
 - Our web tool allows for the automatic conversion of 2D images to 3D models.
-- The converter is available at: [https://dev.wearfits.com/upload](https://dev.wearfits.com/upload)
+- The converter demo is available at: [https://tryon.wearfits.com/shoes](https://tryon.wearfits.com/shoes)
 - Anonymous service is limited and may be disabled at times. Files are deleted periodically.
+- Check this page for more information: [Documentation](https://tryon.wearfits.com/docs/integration-shoes)
 - [Contact us](#contact) for more details.
-
-
 
 
 ## 3D and AR Viewer
@@ -472,9 +475,9 @@ This endpoint allows you to check the automatic positioning status of an uploade
 
 ## Contact
 
-**For any questions, inquiries, or to request an account, please email us at [contact@wearfits.com](mailto:contact@wearfits.com) or schedule an online meeting via [Calendly](https://calendly.com/lukasz-rzepecki/30min).**
+**For any questions, inquiries, or to request an account, please via [Support Form](http://wearfits.com/contact?s=support).**
 
-© 2025 [WEARFITS](https://wearfits.com). All rights reserved.
+© 2026 [WEARFITS](https://wearfits.com). All rights reserved.
 
 
 *Go back to the [main README](README.md).*
