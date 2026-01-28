@@ -306,7 +306,7 @@ A demo is available at: [https://demo.wearfits.com](https://demo.wearfits.com)
 - Each object gets a unique URL allowing for editing and sharing: `https://dev.wearfits.com/object/<id>`
 - In our web editor, you can change textures, PBR parameters, lighting, scale, position, rotation, etc. One object may have multiple texture/color presets.
 - Objects representing **shoes** may be instantly enabled for AR Try-On.
-- [Login](https://dev.wearfits.com/account/login) to keep your models private. Anonymous uploads are public and are periodically deleted.
+- [Login](https://dash.wearfits.com) to keep your models private. Anonymous uploads are public and are periodically deleted.
 - [Contact us](#contact) for an account and API integration.
 
 #### Web App Endpoints
@@ -407,8 +407,8 @@ This endpoint allows for uploading a 3D shoe model (.glb file) which will be aut
 To use the API, you need to obtain an API token:
 
 1. Get your user token
-   - Go to https://dev.wearfits.com/account
-   - Copy user token or click "Generate new token" button to create one
+   - Go to https://dash.wearfits.com
+   - Copy existing API token or click "Generate new token" button to create one
    - Use this token in the Authorization header for API requests
 
 **Parameters:**
